@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'manage_medicine.dart';
+import 'manage_prescription.dart';
+import 'community.dart';
+import 'consultation.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,6 +14,24 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   int _selectedIndex = 0; // Default selected index
   bool _showIndicator = false; // Indicator visibility
+
+  static const List<Widget> widgetOptions = <Widget>[
+    // Add pages here
+    ManageMedicine(),
+    ManagePrescription(),
+    Consultation(),
+    Community(),
+  ];
+
+  void _topIconPressed() {
+    if (!_showIndicator) {
+      // Collapsible sidebar here
+    } else {
+      setState(() {
+        _showIndicator = false;
+      });
+    }
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -44,7 +66,7 @@ class HomePageState extends State<HomePage> {
                   size: 35,
                 ),
           onPressed:
-              () {}, // also using ?: operator to switch between avatar and home icon
+              _topIconPressed, // also switch between avatar and home icon
         ),
         title: Row(
           children: [
@@ -90,9 +112,9 @@ class HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: const Center(
-        child: Text('Welcome to the Home Page!'),
-      ),
+      body: !_showIndicator
+          ? const HomePageContent()
+          : widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: Stack(
         children: [
           if (_showIndicator)
@@ -210,6 +232,23 @@ class HomePageState extends State<HomePage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class HomePageContent extends StatelessWidget {
+  const HomePageContent({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text(
+        'Home Page Content',
+        style: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

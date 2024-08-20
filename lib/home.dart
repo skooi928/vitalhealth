@@ -242,12 +242,137 @@ class HomePageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Home Page Content',
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView(
+          children: [
+            // Quick Consult Card
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.purple[50],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "We will assign quick\nand best doctor",
+                    style: TextStyle(fontSize: 16, color: Colors.black87),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.purple,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    onPressed: () {},
+                    child: const Text("Quick Consult"),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            // Upcoming Appointment
+            const Text(
+              "Upcoming Appointment",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ListTile(
+                leading: const CircleAvatar(
+                  backgroundImage: AssetImage(
+                      'assets/doctor.png'), // Replace with actual image asset
+                ),
+                title: const Text("Dr. Afna Khan"),
+                subtitle: const Text("Skin Specialist | Hospital 123"),
+                trailing: const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.star, color: Colors.amber),
+                    Text("4.9"),
+                  ],
+                ),
+                onTap: () {},
+              ),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.purple,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              onPressed: () {},
+              child: const Text("Today, 5:00 PM"),
+            ),
+            const SizedBox(height: 16),
+            // Pharmacy Nearby
+            const Text(
+              "Pharmacy Nearby",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                            'assets/pharmacy1.png'), // Replace with actual image asset
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text("Pharmacy 456"),
+                        ),
+                        const Text("1.0 km | 4.8 reviews"),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                            'assets/pharmacy2.png'), // Replace with actual image asset
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text("Pharmacy XYZ"),
+                        ),
+                        const Text("500 m | 4.8 reviews"),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            TextButton(
+              onPressed: () {},
+              child: const Text("See all"),
+            ),
+          ],
         ),
       ),
     );

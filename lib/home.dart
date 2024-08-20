@@ -131,7 +131,7 @@ class HomePageState extends State<HomePage> {
                   color: const Color(0xFFA4A5FF),
                   border: Border.all(
                     color: const Color(0xFFA4A5FF),
-                    width: 7,
+                    width: 7.5,
                   ),
                 ),
               ),
@@ -336,7 +336,7 @@ class HomePageContent extends StatelessWidget {
                     child: Column(
                       children: [
                         Image.asset(
-                            'assets/pharmacy1.png'), // Replace with actual image asset
+                            'assets/images/pharmacy1.jpg'), // Replace with actual image asset
                         const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text("Pharmacy 456"),
@@ -355,7 +355,7 @@ class HomePageContent extends StatelessWidget {
                     child: Column(
                       children: [
                         Image.asset(
-                            'assets/pharmacy2.png'), // Replace with actual image asset
+                            'assets/images/pharmacy2.png'), // Replace with actual image asset
                         const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text("Pharmacy XYZ"),

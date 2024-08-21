@@ -81,6 +81,14 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
     - assets/images/onboarding_screen.png
+<<<<<<< HEAD
+    - assets/images/avatar_not_login.png
+    - assets/images/homepage_drphoto.png
+    - assets/images/homepage_pharmacy1.png
+    - assets/images/homepage_pharmacy2.png
+    - assets/images/login_logo1.png
+    - assets/images/community_videocover.png
+=======
     - assets/images/login_bg.png
     - assets/images/google_icon.png
     - assets/images/avatar_not_login.png
@@ -91,3 +99,4 @@ flutter:
     - assets/images/managePrescription_icon.png
     - assets/images/consultation_icon.jpg
     - assets/images/community_icon.png
+>>>>>>> 93c4bca393ac5203f290539d474a543a936172aa

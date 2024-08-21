@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vital_health/firebase_auth/auth_service.dart';
+import 'home.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -8,6 +11,7 @@ class Login extends StatefulWidget {
 }
 
 class LoginState extends State<Login> {
+  final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,6 +22,27 @@ class LoginState extends State<Login> {
             child: Image.asset(
               'assets/images/login_bg.png',
               fit: BoxFit.cover,
+            ),
+          ),
+          // Cross icon at the top right
+          Positioned(
+            top: 40,
+            right: 20,
+            child: GestureDetector(
+              onTap: () {
+                // Handle close action
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const HomePage()), //Need to change to not login homepage
+                );
+              },
+              child: const Icon(
+                Icons.close,
+                color: Colors.white,
+                size: 30,
+              ),
             ),
           ),
           // Blurred and transparent container with login UI
@@ -155,7 +180,10 @@ class LoginState extends State<Login> {
                           child: const Text(
                             'Forgot Password?',
                             style: TextStyle(
-                                color: Color(0xFF757575), fontSize: 10),
+                              color: Color(0xFF757575),
+                              fontSize: 10,
+                              decoration: TextDecoration.underline,
+                            ), // Add underline
                           ),
                         ),
                       ],
@@ -165,8 +193,37 @@ class LoginState extends State<Login> {
                   SizedBox(
                     width: 200,
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        // Replace with actual email and password inputs
+                        String email = 'user@example.com';
+                        String password = 'password';
                         // Handle login
+                        bool loginSuccess = await _auth.login(email, password);
+                        if (loginSuccess) {
+                          // Save login status
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          await prefs.setBool('isLoggedIn', true);
+                          if (!mounted) {
+                            return;
+                          }
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HomePage(),
+                            ),
+                          );
+                        } else {
+                          if (!mounted) {
+                            return;
+                          }
+                          // Optionally, show an error message to the user
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content:
+                                    Text('Login failed. Please try again.')),
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -180,7 +237,10 @@ class LoginState extends State<Login> {
                         shadowColor:
                             Colors.black.withOpacity(0.1), // Remove the shadow
                       ),
-                      child: const Text('Login'),
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(color: Color(0xFFA4A5FF)),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),

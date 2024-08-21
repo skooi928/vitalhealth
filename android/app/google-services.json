@@ -12,7 +12,20 @@
           "package_name": "com.vitalh3alth.vital_health"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "575784813165-cjbatcsnpdgk1snijeiqf9te2jdd03ao.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vitalh3alth.vital_health",
+            "certificate_hash": "878dba526dbd0e6ba9dd808febbf76d1b4422d43"
+          }
+        },
+        {
+          "client_id": "575784813165-htmieu67vhvl6jetb0iqnbf4bjo7dlot.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCGsAGfUlUJ-EChB2zgpiEvVrvxOUH_Udk"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "575784813165-htmieu67vhvl6jetb0iqnbf4bjo7dlot.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

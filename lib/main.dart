@@ -1,22 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'home.dart';
-import 'login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'firebase_auth_check.dart';
 
-void main() {
+int? isViewed;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  Future<void> _initializeFirebase() async {
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isViewed = prefs.getInt('onBoard');
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
-      // Fix only potrait, like IG
+      // Fix only portrait, like IG
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'VitalH3Alth',
@@ -25,13 +38,48 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         useMaterial3: true,
       ),
-      home: const OnboardingScreen(),
+      home: FutureBuilder(
+        future: _initializeFirebase(),
+        builder: (context, snapshot) {
+          // Show loading indicator while waiting for Firebase initialization
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            // Handle error
+            return Scaffold(
+              body: Center(
+                child: Text('Error initializing Firebase: ${snapshot.error}'),
+              ),
+            );
+          } else {
+            // Firebase initialized successfully, show the main app
+            return isViewed != 0
+                ? const OnboardingScreen()
+                : FirebaseAuthCheck();
+          }
+        },
+      ),
     );
   }
 }
 
-class OnboardingScreen extends StatelessWidget {
+class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
+
+  @override
+  OnboardingScreenState createState() => OnboardingScreenState();
+}
+
+class OnboardingScreenState extends State<OnboardingScreen> {
+  _storeOnboardInfo() async {
+    int isViewed = 0;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('onBoard', isViewed);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,10 +102,15 @@ class OnboardingScreen extends StatelessWidget {
               child: SizedBox(
                 width: 200,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    await _storeOnboardInfo(); // Only show the onboarding screen once
+                    if (!mounted) {
+                      return;
+                    } // Check if the widget is still mounted
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
+                      MaterialPageRoute(
+                          builder: (context) => FirebaseAuthCheck()),
                     );
                   },
                   child: const Text(

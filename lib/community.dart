@@ -6,30 +6,6 @@ class Community extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.home, color: Colors.black),
-          onPressed: () {
-            // Add your onPressed code here!
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search, color: Colors.black),
-            onPressed: () {
-              // Add your onPressed code here!
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.person, color: Colors.black),
-            onPressed: () {
-              // Add your onPressed code here!
-            },
-          ),
-        ],
-      ),
       body: ListView(
         children: const [
           PostWidget(

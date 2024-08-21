@@ -79,6 +79,8 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
     - assets/images/onboarding_screen.png
+    - assets/images/login_bg.png
+    - assets/images/google_icon.png
     - assets/images/avatar_not_login.png
     - assets/images/doctor.png
     - assets/images/pharmacy1.jpg

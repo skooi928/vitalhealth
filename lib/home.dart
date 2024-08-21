@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'manage_medicine.dart';
 import 'manage_prescription.dart';
-import 'Community.dart';
+import 'community.dart';
 import 'consultation.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,17 +15,18 @@ class HomePageState extends State<HomePage> {
   int _selectedIndex = 0; // Default selected index
   bool _showIndicator = false; // Indicator visibility
 
-  static List<Widget> widgetOptions = <Widget>[
+  static const List<Widget> widgetOptions = <Widget>[
     // Add pages here
-    const ManageMedicine(),
-    const ManagePrescription(),
-    const Consultation(),
-    const Community(),
+    ManageMedicine(),
+    ManagePrescription(),
+    Consultation(),
+    Community(),
   ];
 
-  void _topIconPressed() {
+  void _topIconPressed(BuildContext context) {
     if (!_showIndicator) {
       // Collapsible sidebar here
+      Scaffold.of(context).openDrawer(); // Open the drawer
     } else {
       setState(() {
         _showIndicator = false;
@@ -55,18 +56,22 @@ class HomePageState extends State<HomePage> {
         elevation: 0.0,
         toolbarHeight: 66.0,
         titleSpacing: 7.0,
-        leading: IconButton(
-          icon: !_showIndicator
-              ? const CircleAvatar(
-            backgroundImage:
-            AssetImage('assets/images/avatar_not_login.png'),
-          )
-              : const Icon(
-            Icons.home,
-            size: 35,
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: !_showIndicator
+                ? const CircleAvatar(
+                    backgroundImage:
+                        AssetImage('assets/images/avatar_not_login.png'),
+                  )
+                : const Icon(
+                    Icons.home,
+                    size: 35,
+                  ),
+            onPressed: () {
+              _topIconPressed(
+                  context); // also switch between avatar and home icon
+            },
           ),
-          onPressed:
-          _topIconPressed, // also switch between avatar and home icon
         ),
         title: Row(
           children: [
@@ -79,7 +84,7 @@ class HomePageState extends State<HomePage> {
                     fillColor: const Color(0xFFFFFFFF),
                     isDense: true,
                     contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 10.0),
+                        const EdgeInsets.symmetric(horizontal: 10.0),
                     prefixIcon: const Icon(
                       Icons.search,
                       size: 22,
@@ -92,17 +97,17 @@ class HomePageState extends State<HomePage> {
                     ),
                     border: OutlineInputBorder(
                       borderSide:
-                      const BorderSide(color: Color(0xFF757575), width: 1),
+                          const BorderSide(color: Color(0xFF757575), width: 1),
                       borderRadius: BorderRadius.circular(45),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide:
-                      const BorderSide(color: Color(0xFF757575), width: 1),
+                          const BorderSide(color: Color(0xFF757575), width: 1),
                       borderRadius: BorderRadius.circular(45),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide:
-                      const BorderSide(color: Color(0xFF757575), width: 1),
+                          const BorderSide(color: Color(0xFF757575), width: 1),
                       borderRadius: BorderRadius.circular(45),
                     ),
                   ),
@@ -112,13 +117,100 @@ class HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      drawer: Drawer(
+        child: Container(
+          padding: const EdgeInsets.only(top: 25.0),
+          decoration: const BoxDecoration(
+            color: Color(0xFFDAE2FF),
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+            ),
+          ),
+          child: Column(
+            children: [
+              // User Profile Section
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundImage: AssetImage('assets/user_avatar.png'),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Jason',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'View Profile',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Menu Items Section
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ListTile(
+                      leading: const Icon(Icons.health_and_safety),
+                      title: const Text('Health Band'),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.message),
+                      title: const Text('Message'),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.check_circle),
+                      title: const Text('Daily Goals'),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.report),
+                      title: const Text('Health Report'),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.settings),
+                      title: const Text('Setting'),
+                      onTap: () {},
+                    ),
+                  ],
+                ),
+              ),
+              // Log Out Section
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: ListTile(
+                  leading: const Icon(Icons.logout),
+                  title: const Text('Log Out'),
+                  onTap: () {
+                    // Handle log out
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       body: !_showIndicator
           ? const HomePageContent()
           : widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: Stack(
         children: [
           if (_showIndicator)
-          // Positioned indicator
+            // Positioned indicator
             Positioned(
               top: 0,
               left: MediaQuery.of(context).size.width /
@@ -131,14 +223,14 @@ class HomePageState extends State<HomePage> {
                   color: const Color(0xFFA4A5FF),
                   border: Border.all(
                     color: const Color(0xFFA4A5FF),
-                    width: 7,
+                    width: 7.5,
                   ),
                 ),
               ),
             ),
           NavigationBarTheme(
             data: NavigationBarThemeData(
-              labelTextStyle: WidgetStateProperty.all(
+              labelTextStyle: MaterialStateProperty.all(
                 const TextStyle(
                   fontSize: 8,
                   height: 1.4,
@@ -154,7 +246,11 @@ class HomePageState extends State<HomePage> {
                   icon: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.medication),
+                      Image(
+                        image: AssetImage('assets/images/medicine_icon.png'),
+                        width: 24,
+                        height: 24,
+                      ),
                       Padding(
                         padding: EdgeInsets.only(top: 2.0),
                         child: Text(
@@ -242,146 +338,151 @@ class HomePageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
+    return Scaffold(
+      body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
-            Card(
-              margin: const EdgeInsets.symmetric(horizontal: 16.0), // Center the card
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Expanded(
-                      child: Text(
-                        'We will assign quick and best doctor',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                        ),
+            // Quick Consult Card
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.purple[50],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "We will assign quick\nand best doctor",
+                    style: TextStyle(fontSize: 16, color: Colors.black87),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.purple,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFA4A5FF), // Updated with color code
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: const Text('Quick Consult'),
-                    ),
-                  ],
-                ),
+                    onPressed: () {},
+                    child: const Text("Quick Consult"),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 16),
+            // Upcoming Appointment
             const Text(
-              'Upcoming Appointment',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            Card(
-              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0), // Adjust margin to increase card size
-              child: Padding(
-                padding: const EdgeInsets.all(16.0), // Adjust padding to increase card size
-                child: Row(
-                  children: [
-                    Image.asset('assets/images/homepage_drphoto.png', height: 100, width: 100), // Increased image size
-                    const SizedBox(width: 20), // Space between image and details
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Dr. Afna Khan',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          const Text('Skin Specialist | Hospital 123'),
-                          const SizedBox(height: 10),
-                          const Row(
-                            children: [
-                              Text('4.9'),
-                              Icon(Icons.star, color: Colors.yellow),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              const Icon(Icons.calendar_today, color: Colors.grey), // Calendar icon
-                              const SizedBox(width: 5),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFFA4A5FF), // Updated with color code
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                ),
-                                onPressed: () {},
-                                child: const Text('Today, 5:00 PM'),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+              "Upcoming Appointment",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 8),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ListTile(
+                leading: const CircleAvatar(
+                  backgroundImage: AssetImage(
+                      'assets/images/doctor.png'), // Replace with actual image asset
+                ),
+                title: const Text("Dr. Afna Khan"),
+                subtitle: const Text("Skin Specialist | Hospital 123"),
+                trailing: const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.star, color: Colors.amber),
+                    Text("4.9"),
+                  ],
+                ),
+                onTap: () {},
+              ),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.purple,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              onPressed: () {},
+              child: const Text("Today, 5:00 PM"),
+            ),
+            const SizedBox(height: 16),
+            // Pharmacy Nearby
             const Text(
-              'Pharmacy Nearby',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              "Pharmacy Nearby",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            const SizedBox(height: 10),
-            const PharmacyCard(
-              name: 'Pharmacy 456',
-              distance: '1.2 km',
-              reviews: '24 reviews',
-              imagePath: 'assets/images/homepage_pharmacy1.png',
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: 200, // Set the desired width
+                          height: 80, // Set the desired height
+                          child: Image.asset(
+                            'assets/images/pharmacy1.jpg',
+                            fit: BoxFit
+                                .cover, // Adjust the image to cover the box while maintaining its aspect ratio
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text("Pharmacy 456"),
+                        ),
+                        const Text("1.0 km | 4.8 reviews"),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: 200, // Set the desired width
+                          height: 80, // Set the desired height
+                          child: Image.asset(
+                            'assets/images/pharmacy2.png',
+                            fit: BoxFit
+                                .cover, // Adjust the image to cover the box while maintaining its aspect ratio
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text("Pharmacy XYZ"),
+                        ),
+                        const Text("500 m | 4.8 reviews"),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-            const PharmacyCard(
-              name: 'Pharmacy XYZ',
-              distance: '500 m',
-              reviews: '48 reviews',
-              imagePath: 'assets/images/homepage_pharmacy2.png',
+            const SizedBox(height: 16),
+            TextButton(
+              onPressed: () {},
+              child: const Text("See all"),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class PharmacyCard extends StatelessWidget {
-  final String name;
-  final String distance;
-  final String reviews;
-  final String imagePath;
-
-  const PharmacyCard({
-    super.key,
-    required this.name,
-    required this.distance,
-    required this.reviews,
-    required this.imagePath,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(16.0), // Adjust margin to increase card size
-      child: Padding(
-        padding: const EdgeInsets.all(16.0), // Adjust padding to increase card size
-        child: ListTile(
-          leading: Image.asset(imagePath, height: 100), // Display the image
-          title: Text(name),
-          subtitle: Text('$distance - $reviews'),
         ),
       ),
     );

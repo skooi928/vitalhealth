@@ -12,6 +12,16 @@ class Login extends StatefulWidget {
 
 class LoginState extends State<Login> {
   final AuthService _auth = AuthService();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +45,7 @@ class LoginState extends State<Login> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          const HomePage()), //Need to change to not login homepage
+                          const HomePage()), // Remember to change back to not login state
                 );
               },
               child: const Icon(
@@ -88,8 +98,9 @@ class LoginState extends State<Login> {
                   const SizedBox(
                       height:
                           20), // Add this to add space between the text and the text field
-                  const TextField(
-                    decoration: InputDecoration(
+                  TextField(
+                    controller: _emailController,
+                    decoration: const InputDecoration(
                       labelText: 'Email',
                       labelStyle: TextStyle(
                         color: Color(0xFFA4A5FF),
@@ -115,9 +126,10 @@ class LoginState extends State<Login> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  const TextField(
+                  TextField(
+                    controller: _passwordController,
                     obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Password',
                       labelStyle: TextStyle(
                         color: Color(0xFFA4A5FF),
@@ -151,6 +163,7 @@ class LoginState extends State<Login> {
                         GestureDetector(
                           onTap: () {
                             // Handle login with Google
+                            _auth.signInWithGoogle();
                           },
                           child: Container(
                             padding: const EdgeInsets.all(8.0),
@@ -194,9 +207,8 @@ class LoginState extends State<Login> {
                     width: 200,
                     child: ElevatedButton(
                       onPressed: () async {
-                        // Replace with actual email and password inputs
-                        String email = 'user@example.com';
-                        String password = 'password';
+                        String email = _emailController.text;
+                        String password = _passwordController.text;
                         // Handle login
                         bool loginSuccess = await _auth.login(email, password);
                         if (loginSuccess) {

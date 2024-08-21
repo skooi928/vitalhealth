@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
+import 'login.dart'; // Import the LoginPage
 
 void main() {
   runApp(const MyApp());
@@ -50,7 +50,7 @@ class OnboardingScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
+                      MaterialPageRoute(builder: (context) => const LoginPage()), // Navigate to LoginPage
                     );
                   },
                   child: const Text(

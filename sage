@@ -1,0 +1,29 @@
+[33mcommit 2f0d46df916db71bf601ab1218092e5c6702c971[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mcommunity[m[33m, [m[1;32mmain[m[33m)[m
+Author: Qian Yun <limqianyun03@gmail.com>
+Date:   Wed Aug 21 22:33:59 2024 +0800
+
+    Updated community.dart with new features
+
+[33mcommit 73ca6b8e385a5edeca2bdf4fe7e906ab339cb2dc[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: skooi928 <skooi866@gmail.com>
+Date:   Tue Aug 13 18:40:53 2024 +0800
+
+    Added workable bottom bar and homepage
+
+[33mcommit 90431f4893160752e553e23422463a407e8bc212[m[33m ([m[1;31morigin/xqbranch[m[33m)[m
+Author: skooi928 <skooi866@gmail.com>
+Date:   Fri Aug 9 18:47:04 2024 +0800
+
+    Added focus indicator and changes to home and user icon
+
+[33mcommit 1a8805aeb8ff20a39292a9805f026f05e8e872e8[m
+Author: skooi928 <skooi866@gmail.com>
+Date:   Thu Aug 8 18:46:23 2024 +0800
+
+    Add top appbar
+
+[33mcommit f1915b3f16a9103cc76a57b20584fbeff23afeba[m
+Author: skooi928 <skooi866@gmail.com>
+Date:   Thu Aug 8 17:52:42 2024 +0800
+
+    First Commit

@@ -3,6 +3,7 @@ import 'manage_medicine.dart';
 import 'manage_prescription.dart';
 import 'community.dart';
 import 'consultation.dart';
+import 'models/user.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -23,9 +24,10 @@ class HomePageState extends State<HomePage> {
     Community(),
   ];
 
-  void _topIconPressed() {
+  void _topIconPressed(BuildContext context) {
     if (!_showIndicator) {
       // Collapsible sidebar here
+      Scaffold.of(context).openDrawer(); // Open the drawer
     } else {
       setState(() {
         _showIndicator = false;
@@ -42,6 +44,10 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Fetch user details
+    String? email = UserCredentials().email;
+    String? displayName = UserCredentials().displayName;
+    String? profilePicUrl = UserCredentials().profilePicUrl;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -55,18 +61,22 @@ class HomePageState extends State<HomePage> {
         elevation: 0.0,
         toolbarHeight: 66.0,
         titleSpacing: 7.0,
-        leading: IconButton(
-          icon: !_showIndicator
-              ? const CircleAvatar(
-                  backgroundImage:
-                      AssetImage('assets/images/avatar_not_login.png'),
-                )
-              : const Icon(
-                  Icons.home,
-                  size: 35,
-                ),
-          onPressed:
-              _topIconPressed, // also switch between avatar and home icon
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: !_showIndicator
+                ? const CircleAvatar(
+                    backgroundImage:
+                        AssetImage('assets/images/avatar_not_login.png'),
+                  )
+                : const Icon(
+                    Icons.home,
+                    size: 35,
+                  ),
+            onPressed: () {
+              _topIconPressed(
+                  context); // also switch between avatar and home icon
+            },
+          ),
         ),
         title: Row(
           children: [
@@ -112,6 +122,97 @@ class HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      drawer: Drawer(
+        child: Container(
+          padding: const EdgeInsets.only(top: 25.0),
+          decoration: const BoxDecoration(
+            color: Color(0xFFDAE2FF),
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+            ),
+          ),
+          child: Column(
+            children: [
+              // User Profile Section
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundImage:
+                          profilePicUrl != null && profilePicUrl.isNotEmpty
+                              ? NetworkImage(profilePicUrl)
+                              : const AssetImage('assets/user_avatar.png')
+                                  as ImageProvider,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      displayName ?? '',
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Text(
+                      'View Profile',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Menu Items Section
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ListTile(
+                      leading: const Icon(Icons.health_and_safety),
+                      title: const Text('Health Band'),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.message),
+                      title: const Text('Message'),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.check_circle),
+                      title: const Text('Daily Goals'),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.report),
+                      title: const Text('Health Report'),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.settings),
+                      title: const Text('Setting'),
+                      onTap: () {},
+                    ),
+                  ],
+                ),
+              ),
+              // Log Out Section
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: ListTile(
+                  leading: const Icon(Icons.logout),
+                  title: const Text('Log Out'),
+                  onTap: () {
+                    // Handle log out
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       body: !_showIndicator
           ? const HomePageContent()
           : widgetOptions.elementAt(_selectedIndex),
@@ -154,7 +255,11 @@ class HomePageState extends State<HomePage> {
                   icon: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.medication),
+                      Image(
+                        image: AssetImage('assets/images/medicine_icon.png'),
+                        width: 24,
+                        height: 24,
+                      ),
                       Padding(
                         padding: EdgeInsets.only(top: 2.0),
                         child: Text(
@@ -291,7 +396,7 @@ class HomePageContent extends StatelessWidget {
               child: ListTile(
                 leading: const CircleAvatar(
                   backgroundImage: AssetImage(
-                      'assets/doctor.png'), // Replace with actual image asset
+                      'assets/images/doctor.png'), // Replace with actual image asset
                 ),
                 title: const Text("Dr. Afna Khan"),
                 subtitle: const Text("Skin Specialist | Hospital 123"),
@@ -335,8 +440,15 @@ class HomePageContent extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        Image.asset(
-                            'assets/images/pharmacy1.jpg'), // Replace with actual image asset
+                        SizedBox(
+                          width: 200, // Set the desired width
+                          height: 80, // Set the desired height
+                          child: Image.asset(
+                            'assets/images/pharmacy1.jpg',
+                            fit: BoxFit
+                                .cover, // Adjust the image to cover the box while maintaining its aspect ratio
+                          ),
+                        ),
                         const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text("Pharmacy 456"),
@@ -354,8 +466,15 @@ class HomePageContent extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        Image.asset(
-                            'assets/images/pharmacy2.png'), // Replace with actual image asset
+                        SizedBox(
+                          width: 200, // Set the desired width
+                          height: 80, // Set the desired height
+                          child: Image.asset(
+                            'assets/images/pharmacy2.png',
+                            fit: BoxFit
+                                .cover, // Adjust the image to cover the box while maintaining its aspect ratio
+                          ),
+                        ),
                         const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text("Pharmacy XYZ"),

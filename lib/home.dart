@@ -136,22 +136,26 @@ class HomePageState extends State<HomePage> {
             children: [
               // User Profile Section
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 20),
+                padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Column(
                   children: [
                     CircleAvatar(
                       radius: 40,
-                      backgroundImage: AssetImage('assets/user_avatar.png'),
+                      backgroundImage:
+                          profilePicUrl != null && profilePicUrl.isNotEmpty
+                              ? NetworkImage(profilePicUrl)
+                              : const AssetImage('assets/user_avatar.png')
+                                  as ImageProvider,
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Text(
                       displayName ?? '',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text(
+                    const Text(
                       'View Profile',
                       style: TextStyle(
                         fontSize: 16,

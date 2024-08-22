@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vital_health/firebase_auth/auth_service.dart';
-import 'package:vital_health/models/user.dart';
 import 'home.dart';
 
 class Login extends StatefulWidget {
@@ -15,6 +14,35 @@ class LoginState extends State<Login> {
   final AuthService _auth = AuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  bool _isLoading = false;
+
+  Future<void> _handleGoogleSignIn() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      await _auth.signInWithGoogle();
+      // Handle successful login (e.g., navigate to the home page)
+      if (!mounted) {
+        return;
+      }
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ),
+      );
+    } catch (e) {
+      // Handle login error
+      print(e);
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -164,7 +192,9 @@ class LoginState extends State<Login> {
                         GestureDetector(
                           onTap: () {
                             // Handle login with Google
-                            _auth.signInWithGoogle();
+                            _isLoading
+                                ? const CircularProgressIndicator()
+                                : _handleGoogleSignIn();
                           },
                           child: Container(
                             padding: const EdgeInsets.all(8.0),

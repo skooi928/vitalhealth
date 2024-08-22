@@ -4,11 +4,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'firebase_auth_check.dart';
+import 'models/user.dart';
 
 int? isViewed;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Load user credentials from shared preferences
+  await UserCredentials().loadFromPreferences();
   runApp(const MyApp());
 }
 

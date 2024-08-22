@@ -17,7 +17,25 @@ class AuthService {
         email: email,
         password: password,
       );
-      return userCredential.user != null;
+      User? firebaseUser = userCredential.user;
+      if (firebaseUser != null) {
+        // Fetch user details
+        String? displayName = firebaseUser.displayName;
+        String? profilePicUrl = firebaseUser.photoURL;
+
+        // Store user details in the UserCredentials singleton instance
+        model.UserCredentials().email = firebaseUser.email ?? '';
+        model.UserCredentials().displayName = displayName ?? '';
+        model.UserCredentials().uid = firebaseUser.uid;
+        model.UserCredentials().profilePicUrl = profilePicUrl ?? '';
+
+        // Save user details to shared preferences
+        await model.UserCredentials().saveToPreferences();
+
+        return true;
+      } else {
+        return false;
+      }
     } catch (e) {
       // Handle login error
       print('Login failed: $e');
@@ -46,6 +64,15 @@ class AuthService {
 
     // Create and return a custom User object
     if (firebaseUser != null) {
+      // Store user details in the UserCredentials singleton instance
+      model.UserCredentials().email = firebaseUser.email ?? '';
+      model.UserCredentials().uid = firebaseUser.uid;
+      model.UserCredentials().displayName = firebaseUser.displayName ?? '';
+      model.UserCredentials().profilePicUrl = firebaseUser.photoURL ?? '';
+
+      // Save user details to shared preferences
+      await model.UserCredentials().saveToPreferences();
+
       return model.User(
         uid: firebaseUser.uid,
         email: firebaseUser.email ?? '',

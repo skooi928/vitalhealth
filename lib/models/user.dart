@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class User {
   final String uid;
@@ -23,11 +24,11 @@ class User {
     );
   }
 
-  // Method to convert User to a map for Firebase
-  Map<String, dynamic> toMap() {
+  // Method to fetch user data
+  Map<String, String?> getUserData() {
     return {
-      'uid': uid,
       'email': email,
+      'uid': uid,
       'displayName': displayName,
       'profilePicUrl': profilePicUrl,
     };
@@ -50,5 +51,26 @@ class UserCredentials {
 
   // User email and password
   String? email;
-  String? password;
+  String? uid;
+  String? displayName;
+  String? profilePicUrl;
+
+  // Method to fetch user data
+  // Save user data to shared preferences
+  Future<void> saveToPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('email', email ?? '');
+    await prefs.setString('uid', uid ?? '');
+    await prefs.setString('displayName', displayName ?? '');
+    await prefs.setString('profilePicUrl', profilePicUrl ?? '');
+  }
+
+  // Load user data from shared preferences
+  Future<void> loadFromPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    email = prefs.getString('email');
+    uid = prefs.getString('uid');
+    displayName = prefs.getString('displayName');
+    profilePicUrl = prefs.getString('profilePicUrl');
+  }
 }

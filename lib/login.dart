@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vital_health/firebase_auth/auth_service.dart';
+import 'package:vital_health/models/user.dart';
 import 'home.dart';
 
 class Login extends StatefulWidget {

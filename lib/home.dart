@@ -3,6 +3,7 @@ import 'manage_medicine.dart';
 import 'manage_prescription.dart';
 import 'community.dart';
 import 'consultation.dart';
+import 'models/user.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -43,6 +44,10 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Fetch user details
+    String? email = UserCredentials().email;
+    String? displayName = UserCredentials().displayName;
+    String? profilePicUrl = UserCredentials().profilePicUrl;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -130,7 +135,7 @@ class HomePageState extends State<HomePage> {
           child: Column(
             children: [
               // User Profile Section
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(vertical: 20),
                 child: Column(
                   children: [
@@ -140,7 +145,7 @@ class HomePageState extends State<HomePage> {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      'Jason',
+                      displayName ?? '',
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,

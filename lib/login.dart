@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vital_health/firebase_auth/auth_service.dart';
 import 'home.dart';
+import 'register.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -25,15 +26,14 @@ class LoginState extends State<Login> {
     try {
       await _auth.signInWithGoogle();
       // Handle successful login (e.g., navigate to the home page)
-      if (!mounted) {
-        return;
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomePage(),
+          ),
+        );
       }
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomePage(),
-        ),
-      );
     } catch (e) {
       // Handle login error
       print(e);
@@ -59,7 +59,7 @@ class LoginState extends State<Login> {
           // Full-screen image
           Positioned.fill(
             child: Image.asset(
-              'assets/images/login_bg.png',
+              'assets/images/loginRegister_bg.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -192,9 +192,7 @@ class LoginState extends State<Login> {
                         GestureDetector(
                           onTap: () {
                             // Handle login with Google
-                            _isLoading
-                                ? const CircularProgressIndicator()
-                                : _handleGoogleSignIn();
+                            _handleGoogleSignIn();
                           },
                           child: Container(
                             padding: const EdgeInsets.all(8.0),
@@ -299,6 +297,11 @@ class LoginState extends State<Login> {
                       GestureDetector(
                         onTap: () {
                           // Handle sign up
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Register()),
+                          );
                         },
                         child: const Text(
                           'Sign Up',
@@ -316,6 +319,16 @@ class LoginState extends State<Login> {
               ),
             ),
           ),
+          if (_isLoading)
+            Container(
+              color: Colors.white.withOpacity(0.69),
+              child: const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Color(0xFFA4A5FF)), // Change this color as needed
+                ),
+              ),
+            ),
         ],
       ),
     );

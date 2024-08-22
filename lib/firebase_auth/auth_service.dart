@@ -83,4 +83,10 @@ class AuthService {
       throw Exception('Failed to sign in with Google');
     }
   }
+
+  // To sign out (google account or firebase account)
+  Future<void> signOut() async {
+    await _auth.signOut();
+    await GoogleSignIn().signOut();
+  }
 }

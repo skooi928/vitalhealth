@@ -16,6 +16,9 @@ class LoginState extends State<Login> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  final emailPattern = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+  bool _isPasswordVisible = false;
   bool _isLoading = false;
 
   Future<void> _handleGoogleSignIn() async {
@@ -152,34 +155,55 @@ class LoginState extends State<Login> {
                               0xFFA4A5FF), // Set the desired color for the focused border
                         ),
                       ),
+                      prefixIcon: Icon(
+                        Icons.email,
+                        color: Color(0xFFA4A5FF),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
                   TextField(
                     controller: _passwordController,
-                    obscureText: true,
-                    decoration: const InputDecoration(
+                    obscureText: !_isPasswordVisible,
+                    decoration: InputDecoration(
                       labelText: 'Password',
-                      labelStyle: TextStyle(
+                      labelStyle: const TextStyle(
                         color: Color(0xFFA4A5FF),
                       ),
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Color(
                               0xFFA4A5FF), // Set the desired color for the border
                         ),
                       ),
-                      enabledBorder: OutlineInputBorder(
+                      enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Color(
                               0xFFA4A5FF), // Set the desired color for the enabled border
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Color(
                               0xFFA4A5FF), // Set the desired color for the focused border
                         ),
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.lock,
+                        color: Color(0xFFA4A5FF),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _isPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: const Color(0xFFA4A5FF),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
                       ),
                     ),
                   ),
@@ -238,31 +262,47 @@ class LoginState extends State<Login> {
                       onPressed: () async {
                         String email = _emailController.text;
                         String password = _passwordController.text;
-                        // Handle login
-                        bool loginSuccess = await _auth.login(email, password);
-                        if (loginSuccess) {
-                          // Save login status
-                          SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          await prefs.setBool('isLoggedIn', true);
+                        try {
+                          if (email.isEmpty || password.isEmpty) {
+                            throw ('Please fill in all fields.');
+                          }
+                          if (!emailPattern.hasMatch(email)) {
+                            throw ('Please enter a valid email address.');
+                          }
+                          // Handle login
+                          bool loginSuccess =
+                              await _auth.login(email, password);
+                          if (loginSuccess) {
+                            // Save login status
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            await prefs.setBool('isLoggedIn', true);
+                            if (!mounted) {
+                              return;
+                            }
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const HomePage(),
+                              ),
+                            );
+                          } else {
+                            if (!mounted) {
+                              return;
+                            }
+                            // Optionally, show an error message to the user
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content:
+                                      Text('Login failed. Please try again.')),
+                            );
+                          }
+                        } catch (e) {
                           if (!mounted) {
                             return;
                           }
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const HomePage(),
-                            ),
-                          );
-                        } else {
-                          if (!mounted) {
-                            return;
-                          }
-                          // Optionally, show an error message to the user
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content:
-                                    Text('Login failed. Please try again.')),
+                            SnackBar(content: Text(e.toString())),
                           );
                         }
                       },
@@ -304,7 +344,7 @@ class LoginState extends State<Login> {
                           );
                         },
                         child: const Text(
-                          'Sign Up',
+                          'Register',
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,

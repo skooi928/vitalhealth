@@ -98,6 +98,7 @@ flutter:
     - assets/images/app_logo.png
 
 flutter_launcher_icons:
-  android: "ic_launcher"
+  android: "ic_launcher" # default is "launcher_icon"
+                        # type "flutter pub run flutter_launcher_icons" in terminal to apply changes
   ios: true
   image_path: "assets/images/app_logo.png"

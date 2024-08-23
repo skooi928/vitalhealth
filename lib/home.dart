@@ -239,7 +239,7 @@ class HomePageState extends State<HomePage> {
             ),
           NavigationBarTheme(
             data: NavigationBarThemeData(
-              labelTextStyle: MaterialStateProperty.all(
+              labelTextStyle: WidgetStateProperty.all(
                 const TextStyle(
                   fontSize: 8,
                   height: 1.4,

@@ -10,6 +10,9 @@ int? isViewed;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+  ));
   // Load user credentials from shared preferences
   await UserCredentials().loadFromPreferences();
   runApp(const MyApp());

@@ -4,6 +4,9 @@ import 'manage_prescription.dart';
 import 'community.dart';
 import 'consultation.dart';
 import 'models/user.dart';
+import 'login.dart';
+import 'firebase_auth/auth_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,6 +18,8 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   int _selectedIndex = 0; // Default selected index
   bool _showIndicator = false; // Indicator visibility
+  bool _isLoading = false; // Loading indicator visibility
+  final AuthService _auth = AuthService();
 
   static const List<Widget> widgetOptions = <Widget>[
     // Add pages here
@@ -42,10 +47,47 @@ class HomePageState extends State<HomePage> {
     });
   }
 
+  // Signout
+  Future<void> _signOut() async {
+    _isLoading = true;
+    try {
+      await _auth.signOut();
+      // Clear user preferences except for 'onBoard'
+      final prefs = await SharedPreferences.getInstance();
+      final keys = prefs.getKeys();
+      for (String key in keys) {
+        if (key != 'onBoard') {
+          await prefs.remove(key);
+        }
+      }
+
+      // Clear UserCredentials singleton instance
+      UserCredentials().email = null;
+      UserCredentials().uid = null;
+      UserCredentials().displayName = null;
+      UserCredentials().profilePicUrl = null;
+
+      // Navigate back to login screen
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Login(),
+          ),
+        );
+      }
+    } catch (e) {
+      print(e);
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // Fetch user details
-    String? email = UserCredentials().email;
     String? displayName = UserCredentials().displayName;
     String? profilePicUrl = UserCredentials().profilePicUrl;
     return Scaffold(
@@ -64,9 +106,12 @@ class HomePageState extends State<HomePage> {
         leading: Builder(
           builder: (context) => IconButton(
             icon: !_showIndicator
-                ? const CircleAvatar(
-                    backgroundImage:
-                        AssetImage('assets/images/avatar_not_login.png'),
+                ? CircleAvatar(
+                    backgroundImage: profilePicUrl != null &&
+                            profilePicUrl.isNotEmpty
+                        ? NetworkImage(profilePicUrl)
+                        : const AssetImage('assets/images/default_avatar.png')
+                            as ImageProvider,
                   )
                 : const Icon(
                     Icons.home,
@@ -141,15 +186,18 @@ class HomePageState extends State<HomePage> {
                   children: [
                     CircleAvatar(
                       radius: 40,
-                      backgroundImage:
-                          profilePicUrl != null && profilePicUrl.isNotEmpty
-                              ? NetworkImage(profilePicUrl)
-                              : const AssetImage('assets/user_avatar.png')
-                                  as ImageProvider,
+                      backgroundImage: profilePicUrl != null &&
+                              profilePicUrl.isNotEmpty
+                          ? NetworkImage(profilePicUrl)
+                          : const AssetImage(
+                                  'assets/images/default_avatar.png') // Just an alternative image, later on will do a homepage
+                              // with exactly same design but with this default avatar image
+                              as ImageProvider,
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      displayName ?? '',
+                      displayName ??
+                          'Guest', // The Guest display is also on the another widget called HomePageNotLogin
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -206,6 +254,7 @@ class HomePageState extends State<HomePage> {
                   title: const Text('Log Out'),
                   onTap: () {
                     // Handle log out
+                    _signOut();
                   },
                 ),
               ),
@@ -213,9 +262,23 @@ class HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: !_showIndicator
-          ? const HomePageContent()
-          : widgetOptions.elementAt(_selectedIndex),
+      body: Stack(
+        children: [
+          !_showIndicator
+              ? const HomePageContent()
+              : widgetOptions.elementAt(_selectedIndex),
+          if (_isLoading)
+            Container(
+              color: Colors.white.withOpacity(0.69),
+              child: const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Color(0xFFA4A5FF)), // Change this color as needed
+                ),
+              ),
+            ),
+        ],
+      ),
       bottomNavigationBar: Stack(
         children: [
           if (_showIndicator)
@@ -278,7 +341,12 @@ class HomePageState extends State<HomePage> {
                   icon: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.receipt),
+                      Image(
+                        image: AssetImage(
+                            'assets/images/managePrescription_icon.png'),
+                        width: 24,
+                        height: 24,
+                      ),
                       Padding(
                         padding: EdgeInsets.only(top: 5.0),
                         child: Text(
@@ -297,7 +365,12 @@ class HomePageState extends State<HomePage> {
                   icon: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.calendar_today),
+                      Image(
+                        image:
+                            AssetImage('assets/images/consultation_icon.png'),
+                        width: 24,
+                        height: 24,
+                      ),
                       Padding(
                         padding: EdgeInsets.only(top: 5.0),
                         child: Text(
@@ -316,7 +389,11 @@ class HomePageState extends State<HomePage> {
                   icon: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.group),
+                      Image(
+                        image: AssetImage('assets/images/community_icon.png'),
+                        width: 24,
+                        height: 24,
+                      ),
                       Padding(
                         padding: EdgeInsets.only(top: 5.0),
                         child: Text(

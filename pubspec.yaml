@@ -44,6 +44,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  flutter_launcher_icons: "^0.13.1"
+
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -82,16 +84,22 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
     - assets/images/onboarding_screen.png
-    - assets/images/avatar_not_login.png
+    - assets/images/default_avatar.png
     - assets/images/login_logo1.png
     - assets/images/community_videocover.png
-    - assets/images/login_bg.png
+    - assets/images/loginRegister_bg.png
     - assets/images/google_icon.png
-    - assets/images/avatar_not_login.png
     - assets/images/doctor.png
     - assets/images/pharmacy1.jpg
     - assets/images/pharmacy2.png
     - assets/images/medicine_icon.png
     - assets/images/managePrescription_icon.png
-    - assets/images/consultation_icon.jpg
+    - assets/images/consultation_icon.png
     - assets/images/community_icon.png
+    - assets/images/app_logo.png
+
+flutter_launcher_icons:
+  android: "ic_launcher" # default is "launcher_icon"
+                        # type "flutter pub run flutter_launcher_icons" in terminal to apply changes
+  ios: true
+  image_path: "assets/images/app_logo.png"

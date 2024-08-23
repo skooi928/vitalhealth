@@ -49,8 +49,9 @@ class UserCredentials {
     return _instance;
   }
 
-  // User email and password
+  // User infos
   String? email;
+  String? password;
   String? uid;
   String? displayName;
   String? profilePicUrl;

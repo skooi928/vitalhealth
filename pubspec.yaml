@@ -97,6 +97,7 @@ flutter:
     - assets/images/consultation_icon.png
     - assets/images/community_icon.png
     - assets/images/app_logo.png
+    - assets/images/heartbeats_graph.png
 
 flutter_launcher_icons:
   android: "ic_launcher" # default is "launcher_icon"

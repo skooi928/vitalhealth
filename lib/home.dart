@@ -7,6 +7,7 @@ import 'models/user.dart';
 import 'login.dart';
 import 'firebase_auth/auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'healthband.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -221,7 +222,12 @@ class HomePageState extends State<HomePage> {
                     ListTile(
                       leading: const Icon(Icons.health_and_safety),
                       title: const Text('Health Band'),
-                      onTap: () {},
+                      onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Healthband()),
+                          );
+                      },
                     ),
                     ListTile(
                       leading: const Icon(Icons.message),

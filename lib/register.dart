@@ -37,12 +37,12 @@ class RegisterState extends State<Register> {
     });
 
     try {
-      if (_emailController.text.isEmpty) {
+      if (_fullNameController.text.isEmpty) {
+        throw 'Full Name cannot be empty';
+      } else if (_emailController.text.isEmpty) {
         throw 'Email cannot be empty';
       } else if (_passwordController.text.isEmpty) {
         throw 'Password cannot be empty';
-      } else if (_fullNameController.text.isEmpty) {
-        throw 'Full Name cannot be empty';
       }
 
       //Check email format

@@ -73,11 +73,10 @@ class LoginState extends State<Login> {
             child: GestureDetector(
               onTap: () {
                 // Handle close action
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          const HomePage()), // Remember to change back to not login state
+                      builder: (context) => const HomePageNotLogin()),
                 );
               },
               child: const Icon(

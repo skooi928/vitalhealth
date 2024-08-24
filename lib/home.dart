@@ -220,10 +220,11 @@ class HomePageState extends State<HomePage> {
                       leading: const Icon(Icons.health_and_safety),
                       title: const Text('Health Band'),
                       onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Healthband()),
-                          );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Healthband()),
+                        );
                       },
                     ),
                     ListTile(
@@ -305,7 +306,7 @@ class HomePageState extends State<HomePage> {
             ),
           NavigationBarTheme(
             data: NavigationBarThemeData(
-              labelTextStyle: WidgetStateProperty.all(
+              labelTextStyle: MaterialStateProperty.all(
                 const TextStyle(
                   fontSize: 8,
                   height: 1.4,

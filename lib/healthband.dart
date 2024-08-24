@@ -11,6 +11,8 @@ class Healthband extends StatelessWidget {
         children: [
           // Rounded Edge Background
           Container(
+            margin:
+                const EdgeInsets.only(top: 35.0), // Set the top margin to 35
             decoration: const BoxDecoration(
               color: Color.fromARGB(174, 174, 199, 255),
               borderRadius: BorderRadius.only(
@@ -18,7 +20,9 @@ class Healthband extends StatelessWidget {
                 topRight: Radius.circular(50.0),
               ),
             ),
-            height: 1000.0, // Adjust the height to your preference
+            height: MediaQuery.of(context)
+                .size
+                .height, // Set height to screen height
             child: Column(
               children: [
                 const SizedBox(height: 20.0), // Add spacing from the top
@@ -63,7 +67,7 @@ class Healthband extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(
                 top:
-                    100.0), // Adjust the top padding to overlap with background
+                    125.0), // Adjust the top padding to overlap with background
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               children: const [
@@ -220,7 +224,8 @@ class CustomCardTwoState extends State<CustomCardTwo> {
                       Text(
                         'User will receive notifications when abnormal heart rate is detected',
                         style: TextStyle(
-                            fontSize: 10.0, fontWeight: FontWeight.bold),
+                          fontSize: 10.0,
+                        ),
                         softWrap: true, // Wrap text if needed
                       ),
                     ],

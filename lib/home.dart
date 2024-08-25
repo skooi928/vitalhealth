@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vital_health/dailygoals.dart';
 import 'manage_medicine.dart';
 import 'manage_prescription.dart';
 import 'community.dart';
@@ -234,7 +235,12 @@ class HomePageState extends State<HomePage> {
                     ListTile(
                       leading: const Icon(Icons.check_circle),
                       title: const Text('Daily Goals'),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => DailyGoals()),
+                          );
+                      },
                     ),
                     ListTile(
                       leading: const Icon(Icons.report),

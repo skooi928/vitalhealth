@@ -98,6 +98,11 @@ flutter:
     - assets/images/community_icon.png
     - assets/images/app_logo.png
     - assets/images/heartbeats_graph.png
+    - assets/images/carrot.jpg
+    - assets/images/water.jpg
+    - assets/images/meditation.jpg
+    - assets/images/skincare.jpg
+    - assets/images/dumbbell.jpg
 
 flutter_launcher_icons:
   android: "ic_launcher" # default is "launcher_icon"

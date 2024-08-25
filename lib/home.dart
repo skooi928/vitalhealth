@@ -10,6 +10,7 @@ import 'login.dart';
 import 'firebase_auth/auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'healthband.dart';
+import 'view_profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -203,13 +204,24 @@ class HomePageState extends State<HomePage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Text(
-                      'View Profile',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey,
+                    GestureDetector(
+                      onTap: () {
+                        // Handle view profile
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ViewProfile(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'View Profile',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF757575),
+                        ),
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),

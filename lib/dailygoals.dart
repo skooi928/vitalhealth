@@ -30,22 +30,25 @@ class DailyGoals extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment
                       .spaceBetween, // Adjust spacing between items
                   children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomePage()),
-                        );
-                      },
-                      child: const Icon(
-                          Icons.arrow_back_ios), // Add your first button here
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 8.0), // Add margin to the left and right
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HomePage(),
+                            ),
+                          );
+                        },
+                        child: const Icon(
+                            Icons.arrow_back_ios), // Add your first button here
+                      ),
                     ),
                     const Expanded(
                       child: Padding(
-                        padding: EdgeInsets.only(
-                            left:
-                                20.0), // Add some padding to move the text to the right
+                        padding: EdgeInsets.only(left: 0.0),
                         child: Text(
                           'Daily Goals',
                           style: TextStyle(
@@ -53,10 +56,14 @@ class DailyGoals extends StatelessWidget {
                         ),
                       ),
                     ),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Icon(Icons
-                          .more_vert_rounded), // Add your second button here
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 8.0), // Add margin to the left and right
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Icon(Icons
+                            .more_vert_rounded), // Add your second button here
+                      ),
                     ),
                   ],
                 ),

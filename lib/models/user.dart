@@ -55,6 +55,12 @@ class UserCredentials {
   String? uid;
   String? displayName;
   String? profilePicUrl;
+  String? realName;
+  String? phoneNumber;
+  int? age;
+  String? gender;
+  double? height;
+  double? weight;
 
   // Method to fetch user data
   // Save user data to shared preferences
@@ -64,6 +70,12 @@ class UserCredentials {
     await prefs.setString('uid', uid ?? '');
     await prefs.setString('displayName', displayName ?? '');
     await prefs.setString('profilePicUrl', profilePicUrl ?? '');
+    await prefs.setString('realName', realName ?? '');
+    await prefs.setString('phoneNumber', phoneNumber ?? '');
+    await prefs.setInt('age', age ?? 0);
+    await prefs.setString('gender', gender ?? '');
+    await prefs.setDouble('height', height ?? 0.0);
+    await prefs.setDouble('weight', weight ?? 0.0);
   }
 
   // Load user data from shared preferences
@@ -73,5 +85,11 @@ class UserCredentials {
     uid = prefs.getString('uid');
     displayName = prefs.getString('displayName');
     profilePicUrl = prefs.getString('profilePicUrl');
+    realName = prefs.getString('realName');
+    phoneNumber = prefs.getString('phoneNumber');
+    age = prefs.getInt('age');
+    gender = prefs.getString('gender');
+    height = prefs.getDouble('height');
+    weight = prefs.getDouble('weight');
   }
 }

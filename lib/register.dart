@@ -52,6 +52,14 @@ class RegisterState extends State<Register> {
         throw 'Invalid email format';
       }
 
+      // Check password format to have a strong password
+      final password = _passwordController.text;
+      final passwordPattern =
+          RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$');
+      if (!passwordPattern.hasMatch(password)) {
+        throw 'Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character, and be 8-15 characters long';
+      }
+
       if (_passwordController.text != _confirmPasswordController.text) {
         throw 'Passwords do not match';
       }

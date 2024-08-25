@@ -3,6 +3,7 @@ import 'package:vital_health/home.dart';
 
 // Main Widget
 class Healthband extends StatelessWidget {
+  const Healthband({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,41 +11,52 @@ class Healthband extends StatelessWidget {
         children: [
           // Rounded Edge Background
           Container(
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(174, 174, 199, 255),
+            margin:
+                const EdgeInsets.only(top: 35.0), // Set the top margin to 35
+            decoration: const BoxDecoration(
+              color: Color.fromARGB(174, 174, 199, 255),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(50.0),
                 topRight: Radius.circular(50.0),
               ),
             ),
-            height: 1000.0, // Adjust the height to your preference
+            height: MediaQuery.of(context)
+                .size
+                .height, // Set height to screen height
             child: Column(
               children: [
-                SizedBox(height: 20.0), // Add spacing from the top
+                const SizedBox(height: 20.0), // Add spacing from the top
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Adjust spacing between items
+                  mainAxisAlignment: MainAxisAlignment
+                      .spaceBetween, // Adjust spacing between items
                   children: [
                     TextButton(
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => HomePage()),
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage()),
                         );
                       },
-                      child: Icon(Icons.arrow_back_ios), // Add your first button here
+                      child: const Icon(
+                          Icons.arrow_back_ios), // Add your first button here
                     ),
-                    Expanded(
+                    const Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 20.0), // Add some padding to move the text to the right
+                        padding: EdgeInsets.only(
+                            left:
+                                20.0), // Add some padding to move the text to the right
                         child: Text(
                           'Health Band',
-                          style: TextStyle(fontSize: 30.0), // Adjust text style as needed
+                          style: TextStyle(
+                              fontSize: 30.0), // Adjust text style as needed
                         ),
                       ),
                     ),
                     TextButton(
                       onPressed: () {},
-                      child: Icon(Icons.more_vert_rounded), // Add your second button here
+                      child: const Icon(Icons
+                          .more_vert_rounded), // Add your second button here
                     ),
                   ],
                 ),
@@ -53,10 +65,12 @@ class Healthband extends StatelessWidget {
           ),
           // ListView of Cards
           Padding(
-            padding: const EdgeInsets.only(top: 100.0), // Adjust the top padding to overlap with background
+            padding: const EdgeInsets.only(
+                top:
+                    125.0), // Adjust the top padding to overlap with background
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              children: [
+              children: const [
                 CustomCardOne(),
                 SizedBox(height: 20.0), // Add spacing between cards
                 CustomCardTwo(),
@@ -71,11 +85,12 @@ class Healthband extends StatelessWidget {
 
 // Custom Card 1
 class CustomCardOne extends StatefulWidget {
+  const CustomCardOne({Key? key}) : super(key: key);
   @override
-  _CustomCardOneState createState() => _CustomCardOneState();
+  CustomCardOneState createState() => CustomCardOneState();
 }
 
-class _CustomCardOneState extends State<CustomCardOne> {
+class CustomCardOneState extends State<CustomCardOne> {
   bool _isConnected = false;
 
   @override
@@ -89,35 +104,43 @@ class _CustomCardOneState extends State<CustomCardOne> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 5.0), // Add some padding to move the text to the right
+                    padding: const EdgeInsets.only(
+                        left:
+                            5.0), // Add some padding to move the text to the right
                     child: Icon(
-                      _isConnected ? Icons.watch : Icons.wifi, // Change icon based on connection status
-                      color: const Color.fromRGBO(164,165,255,1.000),
+                      _isConnected
+                          ? Icons.watch
+                          : Icons
+                              .wifi, // Change icon based on connection status
+                      color: const Color.fromRGBO(164, 165, 255, 1.000),
                       size: 50,
                     ),
                   ),
                 ),
-                SizedBox(width: 10.0), // Spacing between the icon and text
+                const SizedBox(
+                    width: 10.0), // Spacing between the icon and text
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0), // Add some padding to move the text to the right
+                    padding: const EdgeInsets.only(
+                        left:
+                            10.0), // Add some padding to move the text to the right
                     child: Text(
                       _isConnected
                           ? 'Your band is connected to your phone'
                           : 'Your band isn\'t connected to your phone',
-                      style: TextStyle(fontSize: 16.0),
+                      style: const TextStyle(fontSize: 16.0),
                     ),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Align(
               alignment: Alignment.centerRight, // Align the button to the right
               child: ElevatedButton(
@@ -126,7 +149,9 @@ class _CustomCardOneState extends State<CustomCardOne> {
                     _isConnected = !_isConnected; // Toggle connection status
                   });
                 },
-                child: Text(_isConnected ? 'Connected' : 'Connect'), // Change button text based on connection status
+                child: Text(_isConnected
+                    ? 'Connected'
+                    : 'Connect'), // Change button text based on connection status
               ),
             ),
           ],
@@ -138,11 +163,12 @@ class _CustomCardOneState extends State<CustomCardOne> {
 
 // Custom Card 2
 class CustomCardTwo extends StatefulWidget {
+  const CustomCardTwo({Key? key}) : super(key: key);
   @override
-  _CustomCardTwoState createState() => _CustomCardTwoState();
+  CustomCardTwoState createState() => CustomCardTwoState();
 }
 
-class _CustomCardTwoState extends State<CustomCardTwo> {
+class CustomCardTwoState extends State<CustomCardTwo> {
   bool _isSwitched = false;
 
   @override
@@ -156,12 +182,12 @@ class _CustomCardTwoState extends State<CustomCardTwo> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Current Heart Rate',
               style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8.0),
-            Row(
+            const SizedBox(height: 8.0),
+            const Row(
               children: [
                 SizedBox(width: 30), // Add space to the left of "110"
                 Text(
@@ -170,7 +196,7 @@ class _CustomCardTwoState extends State<CustomCardTwo> {
                 ),
               ],
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Center(
               child: SizedBox(
                 width: 350, // Set the width as needed
@@ -181,30 +207,33 @@ class _CustomCardTwoState extends State<CustomCardTwo> {
                 ),
               ),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Expanded(
+                const Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Heart Rate Abnormal Alert',
-                        style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 15.0, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 2.0),
                       Text(
                         'User will receive notifications when abnormal heart rate is detected',
-                        style: TextStyle(fontSize: 10.0, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 10.0,
+                        ),
                         softWrap: true, // Wrap text if needed
                       ),
                     ],
                   ),
                 ),
-                SizedBox(width: 8.0),
+                const SizedBox(width: 8.0),
                 AnimatedSwitcher(
-                  duration: Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 300),
                   child: Switch(
                     key: ValueKey<bool>(_isSwitched),
                     value: _isSwitched,
@@ -213,8 +242,8 @@ class _CustomCardTwoState extends State<CustomCardTwo> {
                         _isSwitched = value;
                       });
                     },
-                    activeColor: Color.fromRGBO(164,165,255,1.000),
-                    hoverColor: Color.fromRGBO(164,165,255,1.000),
+                    activeColor: const Color.fromRGBO(164, 165, 255, 1.000),
+                    hoverColor: const Color.fromRGBO(164, 165, 255, 1.000),
                   ),
                 ),
               ],

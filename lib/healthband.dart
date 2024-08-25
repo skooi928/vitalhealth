@@ -35,12 +35,7 @@ class Healthband extends StatelessWidget {
                           horizontal: 8.0), // Add margin to the left and right
                       child: TextButton(
                         onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const HomePage(),
-                            ),
-                          );
+                          Navigator.pop(context);
                         },
                         child: const Icon(
                             Icons.arrow_back_ios), // Add your first button here

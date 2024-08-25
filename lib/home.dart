@@ -73,11 +73,13 @@ class HomePageState extends State<HomePage> {
 
       // Navigate back to login screen
       if (mounted) {
-        Navigator.pushReplacement(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
             builder: (context) => const Login(),
           ),
+          (Route<dynamic> route) =>
+              false, // This condition removes all the previous routes
         );
       }
     } catch (e) {

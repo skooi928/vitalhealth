@@ -17,7 +17,9 @@ class DailyGoals extends StatelessWidget {
                 topRight: Radius.circular(50.0),
               ),
             ),
-            height: 1000.0, // Adjust the height to your preference
+            height: MediaQuery.of(context)
+                .size
+                .height, // Set height to screen height
             child: Column(
               children: [
                 SizedBox(height: 20.0), // Add spacing from the top
@@ -28,12 +30,14 @@ class DailyGoals extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => HomePage()),
+                          MaterialPageRoute(
+                            builder: (context) => HomePage()
+                          ),
                         );
                       },
                       child: Icon(Icons.arrow_back_ios), // Add your first button here
                     ),
-                    Expanded(
+                    const Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 20.0), // Add some padding to move the text to the right
                         child: Text(
@@ -57,35 +61,30 @@ class DailyGoals extends StatelessWidget {
                         title: 'Water Intake',
                         description: 'Sufficient water intake',
                         imagePath: 'assets/images/water.jpg',
-                        cardColor: const Color.fromARGB(255, 255, 255, 255), // Custom color
                       ),
                       SizedBox(height: 20.0),
                       CustomCard(
                         title: 'Eat 3 Meals',
                         description: 'Eat good food',
                         imagePath: 'assets/images/carrot.jpg',
-                        cardColor: Colors.white,
                       ),
                       SizedBox(height: 20.0),
                       CustomCard(
                         title: 'Meditate For 5 MIN',
                         description: 'Calm your mind',
                         imagePath: 'assets/images/meditation.jpg',
-                        cardColor: Colors.white,
                       ),
                       SizedBox(height: 20.0),
                       CustomCard(
                         title: 'Evening Skincare',
                         description: 'Always 18 years old',
                         imagePath: 'assets/images/skincare.jpg',
-                        cardColor: Colors.white,
                       ),
                       SizedBox(height: 20.0),
                       CustomCard(
                         title: '30 MIN workout',
                         description: 'Keep fit',
                         imagePath: 'assets/images/dumbbell.jpg',
-                        cardColor: Colors.white,
                       ),
                       SizedBox(height: 20.0),
                       Align(
@@ -115,13 +114,11 @@ class CustomCard extends StatefulWidget {
   final String title;
   final String description;
   final String imagePath;
-  final Color cardColor; // Add color as a parameter
 
   CustomCard({
     required this.title,
     required this.description,
     required this.imagePath,
-    required this.cardColor,
   });
 
   @override
@@ -134,7 +131,7 @@ class _CustomCardState extends State<CustomCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: widget.cardColor, // Set the custom color
+      color: Colors.white, // Set the default color to white
       elevation: 8.0, // Add elevation to create a shadow
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),

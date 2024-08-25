@@ -3,6 +3,7 @@ import 'package:vital_health/home.dart';
 
 // Main Widget
 class DailyGoals extends StatelessWidget {
+  const DailyGoals({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,6 +11,8 @@ class DailyGoals extends StatelessWidget {
         children: [
           // Rounded Edge Background
           Container(
+            margin:
+              const EdgeInsets.only(top: 35.0), // Set the top margin to 35
             decoration: BoxDecoration(
               color: const Color.fromARGB(174, 174, 199, 255),
               borderRadius: BorderRadius.only(

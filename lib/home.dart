@@ -239,9 +239,10 @@ class HomePageState extends State<HomePage> {
                       title: const Text('Daily Goals'),
                       onTap: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => DailyGoals()),
-                          );
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const DailyGoals()),
+                        );
                       },
                     ),
                     ListTile(
@@ -255,7 +256,8 @@ class HomePageState extends State<HomePage> {
                       onTap: () {
                         Navigator.push(
                           context,
-                            MaterialPageRoute(builder: (context) => Setting()),
+                          MaterialPageRoute(
+                              builder: (context) => const Setting()),
                         );
                       },
                     ),

@@ -437,8 +437,16 @@ class HomePageContent extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
-                color: Colors.purple[50],
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1), // Shadow color
+                    spreadRadius: 2, // Spread radius
+                    blurRadius: 5, // Blur radius
+                    offset: const Offset(0, 3), // Offset in x and y direction
+                  ),
+                ],
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -449,13 +457,14 @@ class HomePageContent extends StatelessWidget {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.purple,
+                      backgroundColor: const Color(0xFFA4A5FF),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
                     onPressed: () {},
-                    child: const Text("Quick Consult"),
+                    child: const Text("Quick Consult",
+                        style: TextStyle(color: Colors.white)),
                   ),
                 ],
               ),
@@ -492,15 +501,26 @@ class HomePageContent extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purple,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+            Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFFA4A5FF),
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1), // Shadow color
+                    spreadRadius: 2, // Spread radius
+                    blurRadius: 5, // Blur radius
+                    offset: const Offset(0, 3), // Offset in x and y direction
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+              child: const Center(
+                child: Text(
+                  "Today, 5:00 PM",
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
-              onPressed: () {},
-              child: const Text("Today, 5:00 PM"),
             ),
             const SizedBox(height: 16),
             // Pharmacy Nearby
@@ -512,24 +532,30 @@ class HomePageContent extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            Row(
-              children: [
-                Expanded(
-                  child: Card(
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Card(
+                    color: Colors.white,
+                    elevation: 0, // remove shadow
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
                       children: [
                         SizedBox(
-                          width: 200, // Set the desired width
-                          height: 80, // Set the desired height
-                          child: Image.asset(
-                            'assets/images/pharmacy1.jpg',
-                            fit: BoxFit
-                                .cover, // Adjust the image to cover the box while maintaining its aspect ratio
-                          ),
-                        ),
+                            width: 200, // Set the desired width
+                            height: 125, // Set the desired height
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(
+                                  12), // Set the desired border radius
+                              child: Image.asset(
+                                'assets/images/pharmacy1.jpg',
+                                fit: BoxFit
+                                    .cover, // Adjust the image to cover the box while maintaining its aspect ratio
+                              ),
+                            )),
                         const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text("Pharmacy 456"),
@@ -538,24 +564,27 @@ class HomePageContent extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Card(
+                  const SizedBox(width: 16),
+                  Card(
+                    color: Colors.white,
+                    elevation: 0, // remove shadow
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
                       children: [
                         SizedBox(
-                          width: 200, // Set the desired width
-                          height: 80, // Set the desired height
-                          child: Image.asset(
-                            'assets/images/pharmacy2.png',
-                            fit: BoxFit
-                                .cover, // Adjust the image to cover the box while maintaining its aspect ratio
-                          ),
-                        ),
+                            width: 200, // Set the desired width
+                            height: 125, // Set the desired height
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(
+                                  12), // Set the desired border radius
+                              child: Image.asset(
+                                'assets/images/pharmacy2.png',
+                                fit: BoxFit
+                                    .cover, // Adjust the image to cover the box while maintaining its aspect ratio
+                              ),
+                            )),
                         const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text("Pharmacy XYZ"),
@@ -564,8 +593,8 @@ class HomePageContent extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             const SizedBox(height: 16),
             TextButton(

@@ -12,6 +12,7 @@ class ConsultationState extends State<Consultation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Consultation'),
       ),
       body: const Center(

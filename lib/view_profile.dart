@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vital_health/calendar.dart';
+import 'package:vital_health/medicalhistory.dart';
 import 'home.dart';
 import 'dart:io';
 import 'edit_profile.dart';
@@ -201,14 +203,20 @@ class ViewProfileState extends State<ViewProfile> {
                             icon: Icons.calendar_today,
                             text: "Calendar",
                             onTap: () {
-                              // Handle Calendar tap
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Calendar()),
+                              );
                             },
                           ),
                           _buildOptionCard(
                             icon: Icons.history,
                             text: "Medical History",
                             onTap: () {
-                              // Handle Medical History tap
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => MedicalHistory()),
+                              );
                             },
                           ),
                         ],

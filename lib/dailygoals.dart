@@ -74,13 +74,10 @@ class DailyGoals extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     children: [
                       const CustomCard(
-                      const CustomCard(
                         title: 'Water Intake',
                         description: 'Sufficient water intake',
                         imagePath: 'assets/images/water.jpg',
                       ),
-                      const SizedBox(height: 20.0),
-                      const CustomCard(
                       const SizedBox(height: 20.0),
                       const CustomCard(
                         title: 'Eat 3 Meals',
@@ -89,14 +86,10 @@ class DailyGoals extends StatelessWidget {
                       ),
                       const SizedBox(height: 20.0),
                       const CustomCard(
-                      const SizedBox(height: 20.0),
-                      const CustomCard(
                         title: 'Meditate For 5 MIN',
                         description: 'Calm your mind',
                         imagePath: 'assets/images/meditation.jpg',
                       ),
-                      const SizedBox(height: 20.0),
-                      const CustomCard(
                       const SizedBox(height: 20.0),
                       const CustomCard(
                         title: 'Evening Skincare',
@@ -105,14 +98,12 @@ class DailyGoals extends StatelessWidget {
                       ),
                       const SizedBox(height: 20.0),
                       const CustomCard(
-                      const SizedBox(height: 20.0),
-                      const CustomCard(
                         title: '30 MIN workout',
                         description: 'Keep fit',
                         imagePath: 'assets/images/dumbbell.jpg',
                       ),
                       const SizedBox(height: 20.0),
-                      const SizedBox(height: 20.0),
+                      
                       Align(
                         alignment: Alignment.center,
                         child: ElevatedButton(
@@ -120,10 +111,8 @@ class DailyGoals extends StatelessWidget {
                             // Add action for the "Add" button
                           },
                           child: const Text('Add'),
-                          child: const Text('Add'),
                         ),
                       ),
-                      const SizedBox(height: 20.0),
                       const SizedBox(height: 20.0),
                     ],
                   ),
@@ -143,15 +132,14 @@ class CustomCard extends StatefulWidget {
   final String description;
   final String imagePath;
 
-  const CustomCard({
-    Key? key,
+
   const CustomCard({
     Key? key,
     required this.title,
     required this.description,
     required this.imagePath,
   }) : super(key: key);
-  }) : super(key: key);
+
 
   @override
   CustomCardState createState() => CustomCardState();
@@ -179,7 +167,6 @@ class CustomCardState extends State<CustomCard> {
               fit: BoxFit.cover,
             ),
             const SizedBox(width: 16.0), // Spacing between the image and text
-            const SizedBox(width: 16.0), // Spacing between the image and text
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,7 +180,6 @@ class CustomCardState extends State<CustomCard> {
                   const SizedBox(height: 8.0),
                   Text(
                     widget.description,
-                    style: const TextStyle(fontSize: 16.0),
                     style: const TextStyle(fontSize: 16.0),
                   ),
                 ],

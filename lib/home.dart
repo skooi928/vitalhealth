@@ -13,6 +13,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'healthband.dart';
 import 'medicalhistory.dart';
 import 'calendar.dart';
+import 'dart:io';
+import 'view_profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -75,11 +77,13 @@ class HomePageState extends State<HomePage> {
 
       // Navigate back to login screen
       if (mounted) {
-        Navigator.pushReplacement(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
             builder: (context) => const Login(),
           ),
+          (Route<dynamic> route) =>
+              false, // This condition removes all the previous routes
         );
       }
     } catch (e) {
@@ -115,9 +119,11 @@ class HomePageState extends State<HomePage> {
                 ? CircleAvatar(
                     backgroundImage: profilePicUrl != null &&
                             profilePicUrl.isNotEmpty
-                        ? NetworkImage(profilePicUrl)
-                        : const AssetImage('assets/images/default_avatar.png')
-                            as ImageProvider,
+                        ? (profilePicUrl.startsWith('http') ||
+                                profilePicUrl.startsWith('https')
+                            ? NetworkImage(profilePicUrl)
+                            : FileImage(File(profilePicUrl))) as ImageProvider
+                        : const AssetImage('assets/images/default_avatar.png'),
                   )
                 : const Icon(
                     Icons.home,
@@ -194,9 +200,12 @@ class HomePageState extends State<HomePage> {
                       radius: 40,
                       backgroundImage: profilePicUrl != null &&
                               profilePicUrl.isNotEmpty
-                          ? NetworkImage(profilePicUrl)
-                          : const AssetImage('assets/images/default_avatar.png')
-                              as ImageProvider,
+                          ? (profilePicUrl.startsWith('http') ||
+                                  profilePicUrl.startsWith('https')
+                              ? NetworkImage(profilePicUrl)
+                              : FileImage(File(profilePicUrl))) as ImageProvider
+                          : const AssetImage(
+                              'assets/images/default_avatar.png'),
                     ),
                     const SizedBox(height: 10),
                     Text(
@@ -206,13 +215,24 @@ class HomePageState extends State<HomePage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Text(
-                      'View Profile',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey,
+                    GestureDetector(
+                      onTap: () {
+                        // Handle view profile
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ViewProfile(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'View Profile',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF757575),
+                        ),
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -244,7 +264,7 @@ class HomePageState extends State<HomePage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => DailyGoals()),
-                        );
+                          );
                       },
                     ),
                     ListTile(
@@ -263,7 +283,8 @@ class HomePageState extends State<HomePage> {
                       onTap: () {
                         Navigator.push(
                           context,
-                            MaterialPageRoute(builder: (context) => Setting()),
+                          MaterialPageRoute(
+                              builder: (context) => const Setting()),
                         );
                       },
                     ),
@@ -457,8 +478,16 @@ class HomePageContent extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
-                color: Colors.purple[50],
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1), // Shadow color
+                    spreadRadius: 2, // Spread radius
+                    blurRadius: 5, // Blur radius
+                    offset: const Offset(0, 3), // Offset in x and y direction
+                  ),
+                ],
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -469,13 +498,14 @@ class HomePageContent extends StatelessWidget {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.purple,
+                      backgroundColor: const Color(0xFFA4A5FF),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
                     onPressed: () {},
-                    child: const Text("Quick Consult"),
+                    child: const Text("Quick Consult",
+                        style: TextStyle(color: Colors.white)),
                   ),
                 ],
               ),
@@ -512,15 +542,26 @@ class HomePageContent extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purple,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+            Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFFA4A5FF),
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1), // Shadow color
+                    spreadRadius: 2, // Spread radius
+                    blurRadius: 5, // Blur radius
+                    offset: const Offset(0, 3), // Offset in x and y direction
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+              child: const Center(
+                child: Text(
+                  "Today, 5:00 PM",
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
-              onPressed: () {},
-              child: const Text("Today, 5:00 PM"),
             ),
             const SizedBox(height: 16),
             // Pharmacy Nearby
@@ -532,24 +573,30 @@ class HomePageContent extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            Row(
-              children: [
-                Expanded(
-                  child: Card(
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Card(
+                    color: Colors.white,
+                    elevation: 0, // remove shadow
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
                       children: [
                         SizedBox(
-                          width: 200, // Set the desired width
-                          height: 80, // Set the desired height
-                          child: Image.asset(
-                            'assets/images/pharmacy1.jpg',
-                            fit: BoxFit
-                                .cover, // Adjust the image to cover the box while maintaining its aspect ratio
-                          ),
-                        ),
+                            width: 200, // Set the desired width
+                            height: 125, // Set the desired height
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(
+                                  12), // Set the desired border radius
+                              child: Image.asset(
+                                'assets/images/pharmacy1.jpg',
+                                fit: BoxFit
+                                    .cover, // Adjust the image to cover the box while maintaining its aspect ratio
+                              ),
+                            )),
                         const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text("Pharmacy 456"),
@@ -558,24 +605,27 @@ class HomePageContent extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Card(
+                  const SizedBox(width: 16),
+                  Card(
+                    color: Colors.white,
+                    elevation: 0, // remove shadow
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
                       children: [
                         SizedBox(
-                          width: 200, // Set the desired width
-                          height: 80, // Set the desired height
-                          child: Image.asset(
-                            'assets/images/pharmacy2.png',
-                            fit: BoxFit
-                                .cover, // Adjust the image to cover the box while maintaining its aspect ratio
-                          ),
-                        ),
+                            width: 200, // Set the desired width
+                            height: 125, // Set the desired height
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(
+                                  12), // Set the desired border radius
+                              child: Image.asset(
+                                'assets/images/pharmacy2.png',
+                                fit: BoxFit
+                                    .cover, // Adjust the image to cover the box while maintaining its aspect ratio
+                              ),
+                            )),
                         const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text("Pharmacy XYZ"),
@@ -584,8 +634,8 @@ class HomePageContent extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             const SizedBox(height: 16),
             TextButton(

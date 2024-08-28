@@ -12,6 +12,7 @@ class ManagePrescriptionState extends State<ManagePrescription> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Manage Prescription'),
       ),
       body: const Center(

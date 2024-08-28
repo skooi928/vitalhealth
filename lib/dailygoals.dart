@@ -32,42 +32,55 @@ class DailyGoals extends StatelessWidget {
               children: [
                 const SizedBox(height: 20.0), // Add spacing from the top
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Adjust spacing between items
+                  mainAxisAlignment: MainAxisAlignment
+                      .spaceBetween, // Adjust spacing between items
                   children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const HomePage()),
-                        );
-                      },
-                      child: const Icon(Icons.arrow_back_ios), // Add your first button here
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 8.0), // Add margin to the left and right
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Icon(
+                            Icons.arrow_back_ios), // Add your first button here
+                      ),
                     ),
                     const Expanded(
                       child: Padding(
-                        padding: EdgeInsets.only(left: 20.0), // Add some padding to move the text to the right
+                        padding: EdgeInsets.only(left: 0.0),
                         child: Text(
                           'Daily Goals',
-                          style: TextStyle(fontSize: 30.0), // Adjust text style as needed
+                          style: TextStyle(
+                              fontSize: 30.0), // Adjust text style as needed
                         ),
                       ),
                     ),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Icon(Icons.more_vert_rounded), // Add your second button here
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 8.0), // Add margin to the left and right
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Icon(Icons
+                            .more_vert_rounded), // Add your second button here
+                      ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20.0), // Add spacing between header and cards
+                const SizedBox(
+                    height: 20.0), // Add spacing between header and cards
                 Expanded(
                   child: ListView(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     children: [
                       const CustomCard(
+                      const CustomCard(
                         title: 'Water Intake',
                         description: 'Sufficient water intake',
                         imagePath: 'assets/images/water.jpg',
                       ),
+                      const SizedBox(height: 20.0),
+                      const CustomCard(
                       const SizedBox(height: 20.0),
                       const CustomCard(
                         title: 'Eat 3 Meals',
@@ -76,10 +89,14 @@ class DailyGoals extends StatelessWidget {
                       ),
                       const SizedBox(height: 20.0),
                       const CustomCard(
+                      const SizedBox(height: 20.0),
+                      const CustomCard(
                         title: 'Meditate For 5 MIN',
                         description: 'Calm your mind',
                         imagePath: 'assets/images/meditation.jpg',
                       ),
+                      const SizedBox(height: 20.0),
+                      const CustomCard(
                       const SizedBox(height: 20.0),
                       const CustomCard(
                         title: 'Evening Skincare',
@@ -88,10 +105,13 @@ class DailyGoals extends StatelessWidget {
                       ),
                       const SizedBox(height: 20.0),
                       const CustomCard(
+                      const SizedBox(height: 20.0),
+                      const CustomCard(
                         title: '30 MIN workout',
                         description: 'Keep fit',
                         imagePath: 'assets/images/dumbbell.jpg',
                       ),
+                      const SizedBox(height: 20.0),
                       const SizedBox(height: 20.0),
                       Align(
                         alignment: Alignment.center,
@@ -100,8 +120,10 @@ class DailyGoals extends StatelessWidget {
                             // Add action for the "Add" button
                           },
                           child: const Text('Add'),
+                          child: const Text('Add'),
                         ),
                       ),
+                      const SizedBox(height: 20.0),
                       const SizedBox(height: 20.0),
                     ],
                   ),
@@ -123,16 +145,19 @@ class CustomCard extends StatefulWidget {
 
   const CustomCard({
     Key? key,
+  const CustomCard({
+    Key? key,
     required this.title,
     required this.description,
     required this.imagePath,
   }) : super(key: key);
+  }) : super(key: key);
 
   @override
-  _CustomCardState createState() => _CustomCardState();
+  CustomCardState createState() => CustomCardState();
 }
 
-class _CustomCardState extends State<CustomCard> {
+class CustomCardState extends State<CustomCard> {
   bool _isChecked = false;
 
   @override
@@ -154,17 +179,21 @@ class _CustomCardState extends State<CustomCard> {
               fit: BoxFit.cover,
             ),
             const SizedBox(width: 16.0), // Spacing between the image and text
+            const SizedBox(width: 16.0), // Spacing between the image and text
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     widget.title,
-                    style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 20.0, fontWeight: FontWeight.bold),
                   ),
+                  const SizedBox(height: 8.0),
                   const SizedBox(height: 8.0),
                   Text(
                     widget.description,
+                    style: const TextStyle(fontSize: 16.0),
                     style: const TextStyle(fontSize: 16.0),
                   ),
                 ],

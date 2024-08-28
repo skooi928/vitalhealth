@@ -161,7 +161,7 @@ class SettingItem extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
-      elevation: 2.0,
+      elevation: 8.0,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(

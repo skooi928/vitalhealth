@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vital_health/dailygoals.dart';
+import 'package:vital_health/healthreport.dart';
 import 'package:vital_health/setting.dart';
 import 'manage_medicine.dart';
 import 'manage_prescription.dart';
@@ -10,6 +11,8 @@ import 'login.dart';
 import 'firebase_auth/auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'healthband.dart';
+import 'medicalhistory.dart';
+import 'calendar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -241,13 +244,18 @@ class HomePageState extends State<HomePage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => DailyGoals()),
-                          );
+                        );
                       },
                     ),
                     ListTile(
                       leading: const Icon(Icons.report),
                       title: const Text('Health Report'),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => HealthReport()),
+                        );
+                      },
                     ),
                     ListTile(
                       leading: const Icon(Icons.settings),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
+import 'dart:io';
 import 'edit_profile.dart';
 import 'models/user.dart';
 
@@ -12,24 +13,37 @@ class ViewProfile extends StatefulWidget {
 
 class ViewProfileState extends State<ViewProfile> {
   // Fetch ALL user details
-  final String? displayName = UserCredentials().displayName;
-  final String? profilePicUrl = UserCredentials().profilePicUrl;
-  final String? email = UserCredentials().email;
-  final String? realName = UserCredentials().realName;
-  final String? phoneNumber = UserCredentials().phoneNumber;
-  final int? age = UserCredentials().age;
-  final String? gender = UserCredentials().gender;
-  final double? height = UserCredentials().height;
-  final double? weight = UserCredentials().weight;
+  String? displayName = UserCredentials().displayName;
+  String? profilePicUrl = UserCredentials().profilePicUrl;
+  String? email = UserCredentials().email;
+  String? address = UserCredentials().address;
+  String? realName = UserCredentials().realName;
+  String? nric = UserCredentials().nric;
+  String? phoneNumber = UserCredentials().phoneNumber;
+  int? age = UserCredentials().age;
+  String? gender = UserCredentials().gender;
+  double? height = UserCredentials().height;
+  double? weight = UserCredentials().weight;
 
   bool get isProfileIncomplete {
     return email == null ||
+        email!.isEmpty ||
+        address == null ||
+        address!.isEmpty ||
         realName == null ||
+        realName!.isEmpty ||
+        nric == null ||
+        nric!.isEmpty ||
         phoneNumber == null ||
+        phoneNumber!.isEmpty ||
         age == null ||
+        age == 0.0 ||
         gender == null ||
+        gender!.isEmpty ||
         height == null ||
-        weight == null;
+        height == 0.0 ||
+        weight == null ||
+        weight == 0.0;
   }
 
   bool showAlert = false;
@@ -106,16 +120,21 @@ class ViewProfileState extends State<ViewProfile> {
                           Center(
                             child: CircleAvatar(
                               radius: 40,
-                              backgroundImage: profilePicUrl != null
-                                  ? NetworkImage(profilePicUrl!)
+                              backgroundImage: profilePicUrl != null &&
+                                      profilePicUrl!.isNotEmpty
+                                  ? (profilePicUrl!.startsWith('http') ||
+                                              profilePicUrl!.startsWith('https')
+                                          ? NetworkImage(profilePicUrl!)
+                                          : FileImage(File(profilePicUrl!)))
+                                      as ImageProvider
                                   : const AssetImage(
-                                          'assets/images/default_avatar.png')
-                                      as ImageProvider,
+                                      'assets/images/default_avatar.png'),
                             ),
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            displayName!, // Replace with user's real username
+                            displayName ??
+                                "", // Replace with user's real username
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -144,16 +163,27 @@ class ViewProfileState extends State<ViewProfile> {
                                   ),
                                   const SizedBox(height: 10),
                                   _buildDetailRow("Name:", realName ?? "-"),
+                                  _buildDetailRow("NRIC:", nric ?? "-"),
                                   _buildDetailRow(
                                       "Contact no.:", phoneNumber ?? "-"),
                                   _buildDetailRow("Email:", email ?? "-"),
+                                  _buildDetailRow("Address:", address ?? "-"),
                                   _buildDetailRow(
-                                      "Age:", age?.toString() ?? "-"),
+                                      "Age:",
+                                      (age == null || age == 0.0)
+                                          ? ""
+                                          : age.toString()),
                                   _buildDetailRow("Gender:", gender ?? "-"),
-                                  _buildDetailRow("Height:",
-                                      height?.toStringAsFixed(2) ?? "-"),
-                                  _buildDetailRow("Weight:",
-                                      weight?.toStringAsFixed(2) ?? "-"),
+                                  _buildDetailRow(
+                                      "Height:",
+                                      (height == null || height == 0.0)
+                                          ? ""
+                                          : height.toString()),
+                                  _buildDetailRow(
+                                      "Weight:",
+                                      (weight == null || weight == 0.0)
+                                          ? ""
+                                          : weight.toString()),
                                 ],
                               ),
                             ),
@@ -208,8 +238,8 @@ class ViewProfileState extends State<ViewProfile> {
                     ),
                   ],
                 ),
-                child: Center(
-                    child: Row(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
                       "Please ",
@@ -245,7 +275,7 @@ class ViewProfileState extends State<ViewProfile> {
                       ),
                     ),
                   ],
-                )),
+                ),
               ),
             ),
         ],
@@ -257,6 +287,7 @@ class ViewProfileState extends State<ViewProfile> {
 Widget _buildDetailRow(String title, String value) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    crossAxisAlignment: CrossAxisAlignment.start, // Aligns children at the top
     children: [
       Text(
         title,
@@ -265,11 +296,15 @@ Widget _buildDetailRow(String title, String value) {
           color: Colors.black,
         ),
       ),
-      Text(
-        value,
-        style: const TextStyle(
-          fontSize: 16,
-          color: Colors.black,
+      const SizedBox(width: 59), // Adds space between the title and value
+      Flexible(
+        child: Text(
+          value,
+          style: const TextStyle(
+            fontSize: 16,
+            color: Colors.black,
+          ),
+          overflow: TextOverflow.visible, // Allows text to wrap
         ),
       ),
     ],

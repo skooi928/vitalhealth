@@ -56,11 +56,40 @@ class UserCredentials {
   String? displayName;
   String? profilePicUrl;
   String? realName;
+  String? nric;
+  String? address;
   String? phoneNumber;
   int? age;
   String? gender;
   double? height;
   double? weight;
+
+  // Method to update user details
+  void updateUser({
+    String? displayName,
+    String? profilePicUrl,
+    String? email,
+    String? address,
+    String? realName,
+    String? nric,
+    String? phoneNumber,
+    int? age,
+    String? gender,
+    double? height,
+    double? weight,
+  }) {
+    this.displayName = displayName;
+    this.profilePicUrl = profilePicUrl;
+    this.email = email;
+    this.address = address;
+    this.realName = realName;
+    this.nric = nric;
+    this.phoneNumber = phoneNumber;
+    this.age = age;
+    this.gender = gender;
+    this.height = height;
+    this.weight = weight;
+  }
 
   // Method to fetch user data
   // Save user data to shared preferences
@@ -71,6 +100,8 @@ class UserCredentials {
     await prefs.setString('displayName', displayName ?? '');
     await prefs.setString('profilePicUrl', profilePicUrl ?? '');
     await prefs.setString('realName', realName ?? '');
+    await prefs.setString('nric', nric ?? '');
+    await prefs.setString('address', address ?? '');
     await prefs.setString('phoneNumber', phoneNumber ?? '');
     await prefs.setInt('age', age ?? 0);
     await prefs.setString('gender', gender ?? '');
@@ -86,6 +117,8 @@ class UserCredentials {
     displayName = prefs.getString('displayName');
     profilePicUrl = prefs.getString('profilePicUrl');
     realName = prefs.getString('realName');
+    nric = prefs.getString('nric');
+    address = prefs.getString('address');
     phoneNumber = prefs.getString('phoneNumber');
     age = prefs.getInt('age');
     gender = prefs.getString('gender');

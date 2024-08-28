@@ -10,6 +10,7 @@ import 'login.dart';
 import 'firebase_auth/auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'healthband.dart';
+import 'dart:io';
 import 'view_profile.dart';
 
 class HomePage extends StatefulWidget {
@@ -115,9 +116,11 @@ class HomePageState extends State<HomePage> {
                 ? CircleAvatar(
                     backgroundImage: profilePicUrl != null &&
                             profilePicUrl.isNotEmpty
-                        ? NetworkImage(profilePicUrl)
-                        : const AssetImage('assets/images/default_avatar.png')
-                            as ImageProvider,
+                        ? (profilePicUrl.startsWith('http') ||
+                                profilePicUrl.startsWith('https')
+                            ? NetworkImage(profilePicUrl)
+                            : FileImage(File(profilePicUrl))) as ImageProvider
+                        : const AssetImage('assets/images/default_avatar.png'),
                   )
                 : const Icon(
                     Icons.home,
@@ -194,9 +197,12 @@ class HomePageState extends State<HomePage> {
                       radius: 40,
                       backgroundImage: profilePicUrl != null &&
                               profilePicUrl.isNotEmpty
-                          ? NetworkImage(profilePicUrl)
-                          : const AssetImage('assets/images/default_avatar.png')
-                              as ImageProvider,
+                          ? (profilePicUrl.startsWith('http') ||
+                                  profilePicUrl.startsWith('https')
+                              ? NetworkImage(profilePicUrl)
+                              : FileImage(File(profilePicUrl))) as ImageProvider
+                          : const AssetImage(
+                              'assets/images/default_avatar.png'),
                     ),
                     const SizedBox(height: 10),
                     Text(

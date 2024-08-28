@@ -268,6 +268,7 @@ class LoginState extends State<Login> {
                           if (!emailPattern.hasMatch(email)) {
                             throw ('Please enter a valid email address.');
                           }
+                          setState(() => _isLoading = true);
                           // Handle login
                           bool loginSuccess =
                               await _auth.login(email, password);

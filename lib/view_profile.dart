@@ -296,7 +296,7 @@ Widget _buildDetailRow(String title, String value) {
           color: Colors.black,
         ),
       ),
-      const SizedBox(width: 59), // Adds space between the title and value
+      const SizedBox(width: 112), // Adds space between the title and value
       Flexible(
         child: Text(
           value,

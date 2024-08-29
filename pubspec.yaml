@@ -93,6 +93,9 @@ flutter:
     - assets/images/loginRegister_bg.png
     - assets/images/google_icon.png
     - assets/images/doctor.png
+    - assets/images/doctorconsultation1.jpg
+    - assets/images/doctorconsultation2.jpg
+    - assets/images/doctorconsultation3.jpg
     - assets/images/pharmacy1.jpg
     - assets/images/pharmacy2.png
     - assets/images/medicine_icon.png

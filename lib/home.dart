@@ -504,6 +504,33 @@ class HomePageContent extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
+            // Ongoing Medication
+            const Text(
+              "Ongoing Medication",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Center(
+                  child: Text(
+                    "-- No ongoing medication --",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Color(0xFF757575),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
             // Upcoming Appointment
             const Text(
               "Upcoming Appointment",
@@ -558,12 +585,21 @@ class HomePageContent extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             // Pharmacy Nearby
-            const Text(
-              "Pharmacy Nearby",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Pharmacy Nearby",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: const Text("See all"),
+                ),
+              ],
             ),
             const SizedBox(height: 8),
             SingleChildScrollView(
@@ -629,11 +665,6 @@ class HomePageContent extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-            const SizedBox(height: 16),
-            TextButton(
-              onPressed: () {},
-              child: const Text("See all"),
             ),
           ],
         ),

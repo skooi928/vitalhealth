@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vital_health/home.dart';
 
 // Main Widget
 class DailyGoals extends StatelessWidget {

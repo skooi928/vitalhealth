@@ -100,6 +100,7 @@ class MapPickerState extends State<MapPicker> {
               center: _currentPosition,
               zoom: 14.0,
               onTap: (tapPosition, point) => _onTap(point),
+              interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
             ),
             children: [
               TileLayer(

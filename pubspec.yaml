@@ -48,6 +48,8 @@ dev_dependencies:
     sdk: flutter
 
   flutter_launcher_icons: "^0.13.1"
+  table_calendar: ^3.0.7
+  fl_chart: ^0.55.0 
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -109,6 +111,10 @@ flutter:
     - assets/images/meditation.jpg
     - assets/images/skincare.jpg
     - assets/images/dumbbell.jpg
+    - assets/images/heartgraph_daily.png
+    - assets/images/heartgraph_weekly.png
+    - assets/images/heartgraph_monthly.png
+    - assets/images/heartgraph_annually.png
 
 flutter_launcher_icons:
   android: "ic_launcher" # default is "launcher_icon"

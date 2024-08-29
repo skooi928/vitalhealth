@@ -100,6 +100,7 @@ class CustomCardOneState extends State<CustomCardOne> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
+      elevation: 8.0,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -178,6 +179,7 @@ class CustomCardTwoState extends State<CustomCardTwo> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
+      elevation: 8.0,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

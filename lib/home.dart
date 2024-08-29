@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vital_health/dailygoals.dart';
+import 'package:vital_health/healthreport.dart';
 import 'package:vital_health/setting.dart';
 import 'manage_medicine.dart';
 import 'manage_prescription.dart';
@@ -10,6 +11,8 @@ import 'login.dart';
 import 'firebase_auth/auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'healthband.dart';
+import 'medicalhistory.dart';
+import 'calendar.dart';
 import 'dart:io';
 import 'view_profile.dart';
 
@@ -259,16 +262,20 @@ class HomePageState extends State<HomePage> {
                       title: const Text('Daily Goals'),
                       onTap: () {
                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const DailyGoals()),
-                        );
+                            context,
+                            MaterialPageRoute(builder: (context) => DailyGoals()),
+                          );
                       },
                     ),
                     ListTile(
                       leading: const Icon(Icons.report),
                       title: const Text('Health Report'),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => HealthReport()),
+                        );
+                      },
                     ),
                     ListTile(
                       leading: const Icon(Icons.settings),

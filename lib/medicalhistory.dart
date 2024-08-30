@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vital_health/home.dart';
 
 // Main Widget
 class MedicalHistory extends StatelessWidget {
@@ -12,7 +11,8 @@ class MedicalHistory extends StatelessWidget {
         children: [
           // Rounded Edge Background
           Container(
-            margin: const EdgeInsets.only(top: 35.0), // Set the top margin to 35
+            margin:
+                const EdgeInsets.only(top: 35.0), // Set the top margin to 35
             decoration: const BoxDecoration(
               color: Color.fromARGB(174, 174, 199, 255),
               borderRadius: BorderRadius.only(
@@ -20,7 +20,9 @@ class MedicalHistory extends StatelessWidget {
                 topRight: Radius.circular(50.0),
               ),
             ),
-            height: MediaQuery.of(context).size.height, // Set height to screen height
+            height: MediaQuery.of(context)
+                .size
+                .height, // Set height to screen height
             child: Column(
               children: [
                 const SizedBox(height: 20.0), // Add spacing from the top
@@ -137,7 +139,8 @@ class MedicalCard extends StatelessWidget {
           children: [
             Column(
               children: [
-                SizedBox(height: 8.0), // Adjust this value to move the icon down
+                const SizedBox(
+                    height: 8.0), // Adjust this value to move the icon down
                 Center(
                   child: Icon(
                     icon,

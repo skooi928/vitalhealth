@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class Consultation extends StatefulWidget {
@@ -8,6 +10,9 @@ class Consultation extends StatefulWidget {
 }
 
 class ConsultationState extends State<Consultation> {
+  bool isFavorite1 = true;
+  bool isFavorite2 = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +25,7 @@ class ConsultationState extends State<Consultation> {
             // Doctor image section
             Container(
               decoration: BoxDecoration(
-                color: const Color(0xFFE8F0FF),
+                color: const Color(0xFFDAE2FF),
                 borderRadius: BorderRadius.circular(20),
               ),
               padding: const EdgeInsets.all(16),
@@ -75,7 +80,12 @@ class ConsultationState extends State<Consultation> {
               rating: '95%',
               patientStories: '82 Patient Stories',
               nextAvailable: '12:00 AM tomorrow',
-              isFavorite: true,
+              isFavorite: isFavorite1,
+              onPressed: () {
+                setState(() {
+                  isFavorite1 = !isFavorite1;
+                });
+              },
             ),
             const SizedBox(height: 10),
             _buildDoctorCard(
@@ -86,7 +96,12 @@ class ConsultationState extends State<Consultation> {
               rating: '87%',
               patientStories: '60 Patient Stories',
               nextAvailable: '10:00 AM tomorrow',
-              isFavorite: false,
+              isFavorite: isFavorite2,
+              onPressed: () {
+                setState(() {
+                  isFavorite2 = !isFavorite2;
+                });
+              },
             ),
           ],
         ),
@@ -121,12 +136,14 @@ class ConsultationState extends State<Consultation> {
     required String nextAvailable,
     required String imageUrl,
     required bool isFavorite,
+    required VoidCallback onPressed,
   }) {
     return Card(
+      elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
-      elevation: 2,
+      color: const Color(0xFFE8F0FF),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
@@ -178,7 +195,7 @@ class ConsultationState extends State<Consultation> {
                 isFavorite ? Icons.favorite : Icons.favorite_border,
                 color: isFavorite ? Colors.red : Colors.grey,
               ),
-              onPressed: () {},
+              onPressed: onPressed,
             ),
           ],
         ),

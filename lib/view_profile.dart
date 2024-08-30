@@ -205,7 +205,8 @@ class ViewProfileState extends State<ViewProfile> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => Calendar()),
+                                MaterialPageRoute(
+                                    builder: (context) => const Calendar()),
                               );
                             },
                           ),
@@ -215,7 +216,9 @@ class ViewProfileState extends State<ViewProfile> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => MedicalHistory()),
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const MedicalHistory()),
                               );
                             },
                           ),

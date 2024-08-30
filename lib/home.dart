@@ -11,8 +11,6 @@ import 'login.dart';
 import 'firebase_auth/auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'healthband.dart';
-import 'medicalhistory.dart';
-import 'calendar.dart';
 import 'dart:io';
 import 'view_profile.dart';
 
@@ -36,6 +34,23 @@ class HomePageState extends State<HomePage> {
     Consultation(),
     Community(),
   ];
+
+  void _precacheProfilePic(String profilePicUrl) {
+    ImageProvider imageProvider;
+
+    if (profilePicUrl != '' && profilePicUrl.isNotEmpty) {
+      if (profilePicUrl.startsWith('http') ||
+          profilePicUrl.startsWith('https')) {
+        imageProvider = NetworkImage(profilePicUrl);
+      } else {
+        imageProvider = FileImage(File(profilePicUrl));
+      }
+    } else {
+      imageProvider = const AssetImage('assets/images/default_avatar.png');
+    }
+
+    precacheImage(imageProvider, context);
+  }
 
   void _topIconPressed(BuildContext context) {
     if (!_showIndicator) {
@@ -100,8 +115,10 @@ class HomePageState extends State<HomePage> {
     // Fetch user details
     String? displayName = UserCredentials().displayName;
     String? profilePicUrl = UserCredentials().profilePicUrl;
+    _precacheProfilePic(profilePicUrl ?? '');
     return Scaffold(
       appBar: AppBar(
+        scrolledUnderElevation: 0.0,
         automaticallyImplyLeading: false,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1.0),
@@ -262,9 +279,10 @@ class HomePageState extends State<HomePage> {
                       title: const Text('Daily Goals'),
                       onTap: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => DailyGoals()),
-                          );
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const DailyGoals()),
+                        );
                       },
                     ),
                     ListTile(
@@ -272,8 +290,9 @@ class HomePageState extends State<HomePage> {
                       title: const Text('Health Report'),
                       onTap: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => HealthReport()),
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HealthReport()),
                         );
                       },
                     ),

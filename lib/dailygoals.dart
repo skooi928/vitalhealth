@@ -7,18 +7,19 @@ class DailyGoals extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Preload images
-    precacheImage(AssetImage('assets/images/water.jpg'), context);
-    precacheImage(AssetImage('assets/images/carrot.jpg'), context);
-    precacheImage(AssetImage('assets/images/meditation.jpg'), context);
-    precacheImage(AssetImage('assets/images/skincare.jpg'), context);
-    precacheImage(AssetImage('assets/images/dumbbell.jpg'), context);
+    precacheImage(const AssetImage('assets/images/water.jpg'), context);
+    precacheImage(const AssetImage('assets/images/carrot.jpg'), context);
+    precacheImage(const AssetImage('assets/images/meditation.jpg'), context);
+    precacheImage(const AssetImage('assets/images/skincare.jpg'), context);
+    precacheImage(const AssetImage('assets/images/dumbbell.jpg'), context);
 
     return Scaffold(
       body: Stack(
         children: [
           // Rounded Edge Background
           Container(
-            margin: const EdgeInsets.only(top: 35.0), // Set the top margin to 35
+            margin:
+                const EdgeInsets.only(top: 35.0), // Set the top margin to 35
             decoration: const BoxDecoration(
               color: Color.fromARGB(174, 174, 199, 255),
               borderRadius: BorderRadius.only(
@@ -26,7 +27,9 @@ class DailyGoals extends StatelessWidget {
                 topRight: Radius.circular(50.0),
               ),
             ),
-            height: MediaQuery.of(context).size.height, // Set height to screen height
+            height: MediaQuery.of(context)
+                .size
+                .height, // Set height to screen height
             child: Column(
               children: [
                 const SizedBox(height: 20.0), // Add spacing from the top
@@ -102,7 +105,6 @@ class DailyGoals extends StatelessWidget {
                         imagePath: 'assets/images/dumbbell.jpg',
                       ),
                       const SizedBox(height: 20.0),
-                      
                       Align(
                         alignment: Alignment.center,
                         child: ElevatedButton(
@@ -131,14 +133,12 @@ class CustomCard extends StatefulWidget {
   final String description;
   final String imagePath;
 
-
   const CustomCard({
     Key? key,
     required this.title,
     required this.description,
     required this.imagePath,
   }) : super(key: key);
-
 
   @override
   CustomCardState createState() => CustomCardState();

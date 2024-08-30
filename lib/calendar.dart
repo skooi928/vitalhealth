@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:vital_health/home.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);
 
   @override
-  _CalendarState createState() => _CalendarState();
+  CalendarState createState() => CalendarState();
 }
 
-class _CalendarState extends State<Calendar> {
+class CalendarState extends State<Calendar> {
   DateTime _selectedDay = DateTime.now();
   DateTime _focusedDay = DateTime.now();
   Map<DateTime, List<String>> _events = {};
@@ -51,12 +50,7 @@ class _CalendarState extends State<Calendar> {
                   children: [
                     TextButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const HomePage(),
-                          ),
-                        );
+                        Navigator.pop(context);
                       },
                       child: const Icon(Icons.arrow_back_ios),
                     ),
@@ -112,7 +106,7 @@ class _CalendarState extends State<Calendar> {
                     headerStyle: const HeaderStyle(
                       formatButtonVisible: false,
                       titleCentered: true,
-                    ),  
+                    ),
                     daysOfWeekHeight: 55.0, // Adjust the height if needed
                     rowHeight: 55.0, // Adjust the row height if needed
                     weekNumbersVisible: false, // Hide week numbers
@@ -124,8 +118,9 @@ class _CalendarState extends State<Calendar> {
                             child: Container(
                               width: 40,
                               height: 40,
-                              decoration: BoxDecoration(
-                                color: Color.fromARGB(174, 174, 199, 255), // Color of the circle for dates with events
+                              decoration: const BoxDecoration(
+                                color: Color.fromARGB(174, 174, 199,
+                                    255), // Color of the circle for dates with events
                                 shape: BoxShape.circle,
                               ),
                               child: Center(

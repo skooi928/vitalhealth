@@ -43,6 +43,7 @@ dependencies:
   latlong2: ^0.8.1
   geocoding: ^2.0.4
   flutter_widget_from_html: ^0.8.4
+  flutter_local_notifications: ^9.0.0+1
 
 dev_dependencies:
   flutter_test:
@@ -116,6 +117,15 @@ flutter:
     - assets/images/heartgraph_weekly.png
     - assets/images/heartgraph_monthly.png
     - assets/images/heartgraph_annually.png
+    - assets/images/big_pharmacy.png
+    - assets/images/alpro_pharmacy.jpg
+    - assets/images/healthy_pharmacy.jpg
+    - assets/images/peoples_pharmacy.jpg
+    - assets/images/credit_card.png
+    - assets/images/paypal.png
+    - assets/images/google_pay.png
+    - assets/images/cash.png
+    - assets/images/fpx.png
 
 flutter_launcher_icons:
   android: "ic_launcher" # default is "launcher_icon"

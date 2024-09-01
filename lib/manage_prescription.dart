@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vital_health/order_tracking.dart';
+import 'pharmacy_list.dart';
 import '/models/user.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
@@ -500,7 +502,14 @@ class ManagePrescriptionState extends State<ManagePrescription> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PharmacyListPage(),
+                      ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 32.0, vertical: 10.0),
@@ -513,7 +522,14 @@ class ManagePrescriptionState extends State<ManagePrescription> {
                       style: TextStyle(color: Colors.white)),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PharmacyListPage(),
+                      ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 32.0, vertical: 10.0),
@@ -737,7 +753,15 @@ class ManagePrescriptionState extends State<ManagePrescription> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // Check delivery status
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const OrderTrackingPage(),
+                      ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 32.0, vertical: 10.0),

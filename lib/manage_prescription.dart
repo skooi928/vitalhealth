@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vital_health/order_tracking.dart';
 import 'pharmacy_list.dart';
 import '/models/user.dart';
+import 'rate_order.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 class ManagePrescription extends StatefulWidget {
@@ -1004,7 +1005,12 @@ class ManagePrescriptionState extends State<ManagePrescription> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const RateOrder()));
+                  },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 32.0, vertical: 10.0),

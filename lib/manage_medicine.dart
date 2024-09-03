@@ -1,7 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-class ManageMedicine extends StatelessWidget {
+class ManageMedicine extends StatefulWidget {
   const ManageMedicine({Key? key}) : super(key: key);
+  @override
+  ManageMedicineState createState() => ManageMedicineState();
+}
+
+class ManageMedicineState extends State<ManageMedicine> {
+  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
+  @override
+  void initState() {
+    super.initState();
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    _initializeNotifications();
+    showNotification();
+  }
+
+  void _initializeNotifications() async {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    const InitializationSettings initializationSettings =
+        InitializationSettings(
+      android: initializationSettingsAndroid,
+    );
+
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  }
+
+  void showNotification() async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'your_channel_id',
+      'your_channel_name',
+      importance: Importance.max,
+      priority: Priority.high,
+      showWhen: false,
+      icon: '@drawable/ic_stat_ic_notification',
+    );
+
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      'Running out of medication!',
+      'Please refill your Pulmicort Budesonide before 2th September 2024.',
+      platformChannelSpecifics,
+      payload: 'item x',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +96,7 @@ class ManageMedicine extends StatelessWidget {
                         child: Column(
                           children: [
                             const CircularProgressIndicator(
-                              value: 0.5, // This represents the 50% progress
+                              value: 0.25, // This represents the 75% progress
                               strokeWidth: 10,
                               valueColor: AlwaysStoppedAnimation<Color>(
                                 Color(0xFF757575),
@@ -54,7 +105,7 @@ class ManageMedicine extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              '50%',
+                              '75%',
                               style: TextStyle(
                                 fontSize: 32,
                                 fontWeight: FontWeight.bold,
@@ -118,7 +169,7 @@ class ManageMedicine extends StatelessWidget {
                                   ? const Color(0xFF247B7B)
                                   : Colors.transparent,
                               child: Text(
-                                '${index + 1}',
+                                '${index + 24}',
                                 style: TextStyle(
                                   color:
                                       index == 5 ? Colors.white : Colors.black,
@@ -136,14 +187,14 @@ class ManageMedicine extends StatelessWidget {
                     // Medication List
                     Expanded(
                       child: ListView(
-                        children: [
-                          _buildMedicationTimeSlot(
-                            "9:00 AM",
-                            ["Amoxicillin", "Metformin"],
+                        children: const [
+                          MedicationTimeSlot(
+                            time: "9:00 AM",
+                            medications: ["Amoxicillin", "Metformin"],
                           ),
-                          _buildMedicationTimeSlot(
-                            "5:00 PM",
-                            ["Amoxicillin", "Metformin"],
+                          MedicationTimeSlot(
+                            time: "5:00 PM",
+                            medications: ["Amoxicillin", "Metformin"],
                           ),
                         ],
                       ),
@@ -157,15 +208,48 @@ class ManageMedicine extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildMedicationTimeSlot(String time, List<String> medications) {
+class MedicationTimeSlot extends StatefulWidget {
+  final String time;
+  final List<String> medications;
+
+  const MedicationTimeSlot({
+    Key? key,
+    required this.time,
+    required this.medications,
+  }) : super(key: key);
+
+  @override
+  MedicationTimeSlotState createState() => MedicationTimeSlotState();
+}
+
+class MedicationTimeSlotState extends State<MedicationTimeSlot> {
+  final Map<String, bool> _checkedMedications = {};
+
+  @override
+  void initState() {
+    super.initState();
+    for (var medication in widget.medications) {
+      _checkedMedications[medication] = false;
+    }
+  }
+
+  void _toggleCheck(String medication) {
+    setState(() {
+      _checkedMedications[medication] = !_checkedMedications[medication]!;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            time,
+            widget.time,
             style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -173,7 +257,7 @@ class ManageMedicine extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          ...medications.map((medication) {
+          ...widget.medications.map((medication) {
             return Card(
               color: const Color(
                   0xFFE6E9FF), // Light blue background for medication card
@@ -190,10 +274,14 @@ class ManageMedicine extends StatelessWidget {
                   "Take 1 capsule orally (Before or after food)",
                   style: TextStyle(color: Colors.grey[600]),
                 ),
-                trailing: const Icon(
-                  Icons.radio_button_unchecked,
-                  color: Color(0xFF247B7B), // Dark green for the radio button
+                trailing: Icon(
+                  _checkedMedications[medication]!
+                      ? Icons.radio_button_checked
+                      : Icons.radio_button_unchecked,
+                  color: const Color(
+                      0xFF247B7B), // Dark green for the radio button
                 ),
+                onTap: () => _toggleCheck(medication),
               ),
             );
           }).toList(),

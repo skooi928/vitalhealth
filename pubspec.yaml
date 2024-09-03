@@ -44,6 +44,14 @@ dependencies:
   geocoding: ^2.0.4
   flutter_widget_from_html: ^0.8.4
   flutter_local_notifications: ^9.0.0+1
+  google_generative_ai: ^0.4.5
+  flutter_markdown: ^0.6.19
+  flutter_dotenv: ^5.0.0
+  
+dependency_overrides:
+  # Add the specific version of the conflicting dependency here
+  # For example, if the conflict is with `http` package:
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -126,6 +134,8 @@ flutter:
     - assets/images/google_pay.png
     - assets/images/cash.png
     - assets/images/fpx.png
+    - assets/images/gemini_logo.jpg
+    - assets/images/gemini_icon.png
 
 flutter_launcher_icons:
   android: "ic_launcher" # default is "launcher_icon"

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'rate_order.dart';
 
 class OrderTrackingPage extends StatefulWidget {
   const OrderTrackingPage({Key? key}) : super(key: key);
@@ -169,12 +168,7 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
                   TextButton(
                     onPressed: () {
                       // Real implementation: Navigate to details page or show more details
-                      // showNotification(); Test for UI screenshot only (not implemented here)
-                      // Test for UI screenshot only (not implemented here)
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const RateOrder()));
+                      showNotification(); //Test for UI screenshot only (not implemented here)
                     },
                     child: const Text(
                       "View all details",

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vital_health/dailygoals.dart';
 import 'package:vital_health/healthreport.dart';
+import 'package:vital_health/message.dart';
 import 'package:vital_health/setting.dart';
 import 'manage_medicine.dart';
 import 'manage_prescription.dart';
@@ -272,7 +273,13 @@ class HomePageState extends State<HomePage> {
                     ListTile(
                       leading: const Icon(Icons.message),
                       title: const Text('Message'),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Message()),
+                        );
+                      },
                     ),
                     ListTile(
                       leading: const Icon(Icons.check_circle),

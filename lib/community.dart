@@ -37,7 +37,8 @@ class Community extends StatelessWidget {
             handle: '@josephiejojo',
             caption: 'posted an article',
             title: 'Global Health Concerns',
-            description: 'Systematic Review of Major Cardiovascular Risk Factors',
+            description:
+                'Systematic Review of Major Cardiovascular Risk Factors',
             likes: 519,
             comments: 10,
             isVideo: false,
@@ -68,7 +69,8 @@ class PostWidget extends StatelessWidget {
   final int comments;
   final bool isVideo;
 
-  const PostWidget({super.key,
+  const PostWidget({
+    super.key,
     required this.username,
     required this.handle,
     required this.caption,
@@ -97,7 +99,8 @@ class PostWidget extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(username, style: const TextStyle(fontWeight: FontWeight.bold)),
+                    Text(username,
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
                     Text(handle, style: const TextStyle(color: Colors.grey)),
                   ],
                 ),
@@ -149,7 +152,8 @@ class PostWidget extends StatelessWidget {
             color: Colors.grey[800],
             child: Text(
               title,
-              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold),
             ),
           ),
           Container(
@@ -195,7 +199,8 @@ class PostWidget extends StatelessWidget {
               ),
               const Positioned.fill(
                 child: Center(
-                  child: Icon(Icons.play_circle_fill, color: Colors.white, size: 50),
+                  child: Icon(Icons.play_circle_fill,
+                      color: Colors.white, size: 50),
                 ),
               ),
             ],

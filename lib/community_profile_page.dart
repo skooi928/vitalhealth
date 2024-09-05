@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vital_health/community_bookmark.dart';
 
 class CommunityProfilePage extends StatelessWidget {
   const CommunityProfilePage({super.key});
@@ -25,7 +26,6 @@ class CommunityProfilePage extends StatelessWidget {
                       CircleAvatar(
                         radius: 30,
                         backgroundImage: AssetImage('assets/images/Loopy.png'),
-                        // Local image asset
                       ),
                       SizedBox(height: 8),
                       Text('Jason00',
@@ -37,8 +37,18 @@ class CommunityProfilePage extends StatelessWidget {
                   ),
                   Row(
                     children: [
+                      // Navigate to BookmarkPage when pressed
                       IconButton(
-                          onPressed: () {}, icon: const Icon(Icons.bookmark)),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CommunityBookmark(),
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.bookmark),
+                      ),
                       IconButton(
                           onPressed: () {},
                           icon: const Icon(Icons.notifications)),
@@ -105,7 +115,7 @@ class CommunityProfilePage extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Big thanks to Dr. Celine for the insightful online consultation! Your expertise has made a world of difference, and I\'m grateful for the technology that bridges the gap for us rural residents, bringing top-notch care right to our homes. #HealthcareAdvancements #VitalH3Alth',
+                    'Big thanks to Dr. Celine for the insightful online consultation! Your expertise has made a world of difference...',
                   ),
                 ],
               ),

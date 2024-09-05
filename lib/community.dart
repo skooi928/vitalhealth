@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'community_profile_page.dart'; // Ensure this import is correct
 
 class Community extends StatelessWidget {
   const Community({super.key});
@@ -6,52 +7,58 @@ class Community extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.home, color: Colors.black),
-          onPressed: () {
-            // Add your onPressed code here!
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search, color: Colors.black),
-            onPressed: () {
-              // Add your onPressed code here!
-            },
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CommunityProfilePage(),
+                      ),
+                    );
+                  },
+                  child: const CircleAvatar(
+                    radius: 40,
+                    backgroundImage: AssetImage(
+                      'assets/images/Loopy.png',
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-          IconButton(
-            icon: const Icon(Icons.person, color: Colors.black),
-            onPressed: () {
-              // Add your onPressed code here!
-            },
-          ),
-        ],
-      ),
-      body: ListView(
-        children: const [
-          PostWidget(
-            username: 'Josephine',
-            handle: '@josephiejojo',
-            caption: 'posted an article',
-            title: 'Global Health Concerns',
-            description:
-                'Systematic Review of Major Cardiovascular Risk Factors',
-            likes: 519,
-            comments: 10,
-            isVideo: false,
-          ),
-          PostWidget(
-            username: 'Farita Smith',
-            handle: '@SmithFa',
-            caption: 'posted a video',
-            title: 'IMPORTANCE OF TELEMEDICINE',
-            description: 'Accessible; Anytime, Anywhere',
-            likes: 10,
-            comments: 2,
-            isVideo: true,
+          Expanded(
+            child: ListView(
+              children: const [
+                PostWidget(
+                  username: 'Josephine',
+                  handle: '@josephiejojo',
+                  caption: 'posted an article',
+                  title: 'Global Health Concerns',
+                  description:
+                      'Systematic Review of Major Cardiovascular Risk Factors',
+                  likes: 519,
+                  comments: 10,
+                  isVideo: false,
+                ),
+                PostWidget(
+                  username: 'Farita Smith',
+                  handle: '@SmithFa',
+                  caption: 'posted a video',
+                  title: 'IMPORTANCE OF TELEMEDICINE',
+                  description: 'Accessible; Anytime, Anywhere',
+                  likes: 10,
+                  comments: 2,
+                  isVideo: true,
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -87,49 +94,50 @@ class PostWidget extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       child: Padding(
         padding: const EdgeInsets.all(10),
-        child: Column(
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  child: Text(username[0]),
-                ),
-                const SizedBox(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(username,
-                        style: const TextStyle(fontWeight: FontWeight.bold)),
-                    Text(handle, style: const TextStyle(color: Colors.grey)),
-                  ],
-                ),
-              ],
+            CircleAvatar(
+              backgroundColor: Colors.grey[200],
+              backgroundImage: const AssetImage(
+                'assets/images/avatar_not_login.png', // Ensure this path is correct
+              ),
             ),
-            const SizedBox(height: 10),
-            Text(caption, style: const TextStyle(color: Colors.grey)),
-            const SizedBox(height: 10),
-            isVideo ? buildVideoPost() : buildArticlePost(),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    const Icon(Icons.comment, color: Colors.grey),
-                    const SizedBox(width: 5),
-                    Text('$comments Comments'),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Icon(Icons.thumb_up, color: Colors.grey),
-                    const SizedBox(width: 5),
-                    Text('$likes Likes'),
-                  ],
-                ),
-                const Icon(Icons.share, color: Colors.grey),
-              ],
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(username,
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                  Text(handle, style: const TextStyle(color: Colors.grey)),
+                  const SizedBox(height: 10),
+                  Text(caption, style: const TextStyle(color: Colors.grey)),
+                  const SizedBox(height: 10),
+                  isVideo ? buildVideoPost() : buildArticlePost(),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(Icons.comment, color: Colors.grey),
+                          const SizedBox(width: 5),
+                          Text('$comments Comments'),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Icon(Icons.thumb_up, color: Colors.grey),
+                          const SizedBox(width: 5),
+                          Text('$likes Likes'),
+                        ],
+                      ),
+                      const Icon(Icons.share, color: Colors.grey),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

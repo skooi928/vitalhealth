@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'community_profile_page.dart'; // Ensure this import is correct
+import 'community_profile_page.dart';
 
 class Community extends StatelessWidget {
   const Community({super.key});
@@ -100,7 +100,7 @@ class PostWidget extends StatelessWidget {
             CircleAvatar(
               backgroundColor: Colors.grey[200],
               backgroundImage: const AssetImage(
-                'assets/images/avatar_not_login.png', // Ensure this path is correct
+                'assets/images/avatar_not_login.png',
               ),
             ),
             const SizedBox(width: 10),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vital_health/community_bookmark.dart';
+import 'package:vital_health/community_notification.dart';
 
 class CommunityProfilePage extends StatelessWidget {
   const CommunityProfilePage({super.key});
@@ -11,10 +12,8 @@ class CommunityProfilePage extends StatelessWidget {
         title: const Text('My Profile'),
       ),
       body: SingleChildScrollView(
-        // Added for scrollable content
         child: Column(
           children: [
-            // Header section
             Container(
               padding: const EdgeInsets.all(16),
               child: Row(
@@ -37,7 +36,6 @@ class CommunityProfilePage extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      // Navigate to BookmarkPage when pressed
                       IconButton(
                         onPressed: () {
                           Navigator.push(
@@ -50,19 +48,27 @@ class CommunityProfilePage extends StatelessWidget {
                         icon: const Icon(Icons.bookmark),
                       ),
                       IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.notifications)),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const CommunityNotification(),
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.notifications),
+                      ),
                     ],
                   ),
                 ],
               ),
             ),
-            // First post (Article)
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
-                color: Colors.white, // Background color for the box
+                color: Colors.white,
               ),
               padding: const EdgeInsets.all(10),
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -77,32 +83,47 @@ class CommunityProfilePage extends StatelessWidget {
                     width: double.infinity,
                     padding: const EdgeInsets.all(10),
                     color: Colors.grey[800],
-                    child: const Text(
-                      'Global Health Concern',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Global Health Concern',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
                   ),
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(10),
                     color: Colors.grey[300],
-                    child: const Text(
-                      'Systematic Review of Major Cardiovascular Risk Factors',
-                      style: TextStyle(color: Colors.black),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Systematic Review of Major Cardiovascular Risk Factors',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                        Icon(
+                          Icons.favorite,
+                          color: Colors.red,
+                          size: 24,
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-            // Space between posts
             const SizedBox(height: 16),
-            // Second post (Additional text)
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
-                color: Colors.white, // Background color for the box
+                color: Colors.white,
               ),
               padding: const EdgeInsets.all(10),
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -115,12 +136,11 @@ class CommunityProfilePage extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'Big thanks to Dr. Celine for the insightful online consultation! Your expertise has made a world of difference...',
+                    'Big thanks to Dr. Celine for the insightful online consultation! Your expertise has made a world of difference, and I\'m grateful for the technology that bridges the gap for us rural residents, bringing top-notch care right to our homes. #HealthcareAdvancements #VitalH3Alth',
                   ),
                 ],
               ),
             ),
-            // Footer section
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Row(

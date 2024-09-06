@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'community_profile_page.dart';
+import 'community_view_profile.dart';
 
 class Community extends StatelessWidget {
   const Community({super.key});
@@ -46,6 +47,16 @@ class Community extends StatelessWidget {
                   likes: 519,
                   comments: 10,
                   isVideo: false,
+                  bio:
+                      'Josephine is a health expert with a passion for global health.',
+                  followers: 520,
+                  following: 1314,
+                  healthTips: [
+                    'Eat Healthy',
+                    'Exercise Regularly',
+                    'Sleep Well'
+                  ],
+                  avatarImage: 'assets/images/josephine_avatar.png',
                 ),
                 PostWidget(
                   username: 'Farita Smith',
@@ -56,6 +67,16 @@ class Community extends StatelessWidget {
                   likes: 10,
                   comments: 2,
                   isVideo: true,
+                  bio:
+                      'Farita is a telemedicine specialist focused on digital healthcare.',
+                  followers: 300,
+                  following: 900,
+                  healthTips: [
+                    'Use Telemedicine',
+                    'Stay Informed',
+                    'Keep Active'
+                  ],
+                  avatarImage: 'assets/images/farita_avatar.png',
                 ),
               ],
             ),
@@ -75,6 +96,11 @@ class PostWidget extends StatelessWidget {
   final int likes;
   final int comments;
   final bool isVideo;
+  final String bio;
+  final int followers;
+  final int following;
+  final List<String> healthTips;
+  final String avatarImage;
 
   const PostWidget({
     super.key,
@@ -86,6 +112,11 @@ class PostWidget extends StatelessWidget {
     required this.likes,
     required this.comments,
     required this.isVideo,
+    required this.bio,
+    required this.followers,
+    required this.following,
+    required this.healthTips,
+    required this.avatarImage,
   });
 
   @override
@@ -97,10 +128,25 @@ class PostWidget extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CircleAvatar(
-              backgroundColor: Colors.grey[200],
-              backgroundImage: const AssetImage(
-                'assets/images/avatar_not_login.png',
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CommunityViewProfile(
+                      username: username,
+                      handle: handle,
+                      bio: bio,
+                      followers: followers,
+                      following: following,
+                      profilePhoto: avatarImage,
+                    ),
+                  ),
+                );
+              },
+              child: CircleAvatar(
+                backgroundColor: Colors.grey[200],
+                backgroundImage: AssetImage(avatarImage),
               ),
             ),
             const SizedBox(width: 10),
@@ -133,7 +179,13 @@ class PostWidget extends StatelessWidget {
                           Text('$likes Likes'),
                         ],
                       ),
-                      const Icon(Icons.share, color: Colors.grey),
+                      const Row(
+                        children: [
+                          Icon(Icons.bookmark_border, color: Colors.grey),
+                          SizedBox(width: 5),
+                          Icon(Icons.share, color: Colors.grey),
+                        ],
+                      ),
                     ],
                   ),
                 ],
@@ -222,9 +274,7 @@ class PostWidget extends StatelessWidget {
               children: [
                 IconButton(
                   icon: const Icon(Icons.replay_10, color: Colors.black),
-                  onPressed: () {
-                    // Add your onPressed code here!
-                  },
+                  onPressed: () {},
                 ),
                 const Text(
                   '00:00 / 03:00',
@@ -232,9 +282,7 @@ class PostWidget extends StatelessWidget {
                 ),
                 IconButton(
                   icon: const Icon(Icons.forward_10, color: Colors.black),
-                  onPressed: () {
-                    // Add your onPressed code here!
-                  },
+                  onPressed: () {},
                 ),
               ],
             ),

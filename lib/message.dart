@@ -52,10 +52,10 @@ class Message extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.9, // Set width to 90% of screen width
                   child: CustomCard(
-                    imageUrl: 'assets/images/doctorconsultation3.jpg', // Add your image path here
+                    imageUrl: 'assets/images/doctorconsultation2.jpg', // Add your image path here
                     title: 'Dr. Jane Smith',
                     subtitle1: '011-2134 9824',
-                    subtitle2: 'Reminder for your appointment Mr. Jason',
+                    subtitle2: 'Reminder for your appointment',
                     onTap: () {},
                   ),
                 ),
@@ -63,7 +63,7 @@ class Message extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.9, // Set width to 90% of screen width
                   child: CustomCard(
-                    imageUrl: 'assets/images/doctorconsultation2.jpg', // Add your image path here
+                    imageUrl: 'assets/images/doctorconsultation3.jpg', // Add your image path here
                     title: 'Dr. Lebron James',
                     subtitle1: '011-792 3699',
                     subtitle2: 'Get well soon Mr. Jason!',
@@ -108,6 +108,7 @@ class CustomCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center, // Center image vertically
             children: [
               // Making the image square
               Container(
@@ -126,24 +127,31 @@ class CustomCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 20.0),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title, 
-                    style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 5.0), // Add spacing between text lines
-                  Text(
-                    subtitle1, 
-                    style: const TextStyle(fontSize: 16.0),
-                  ),
-                  const SizedBox(height: 5.0), // Add spacing between text lines
-                  Text(
-                    subtitle2, 
-                    style: const TextStyle(fontSize: 16.0),
-                  ),
-                ],
+              // Wrapping text in Expanded to prevent overflow
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title, 
+                      style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 5.0), // Add spacing between text lines
+                    Text(
+                      subtitle1, 
+                      style: const TextStyle(fontSize: 16.0),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis, // Ensures that long text doesn't overflow
+                    ),
+                    const SizedBox(height: 5.0), // Add spacing between text lines
+                    Text(
+                      subtitle2, 
+                      style: const TextStyle(fontSize: 16.0),
+                      maxLines: 1, // Display the third line (subtitle2) on only one line
+                      overflow: TextOverflow.ellipsis, // Truncate subtitle2 if too long
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

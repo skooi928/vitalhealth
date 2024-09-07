@@ -136,6 +136,13 @@ flutter:
     - assets/images/fpx.png
     - assets/images/gemini_logo.jpg
     - assets/images/gemini_icon.png
+    - assets/images/Loopy.png 
+    - assets/images/Community_Post1.png
+    - assets/images/Community_Post2.png
+    - assets/images/Community_Post3.png
+    - assets/images/Community_Post4.png
+    - assets/images/josephine_avatar.png
+    - assets/images/farita_avatar.png
 
 flutter_launcher_icons:
   android: "ic_launcher" # default is "launcher_icon"

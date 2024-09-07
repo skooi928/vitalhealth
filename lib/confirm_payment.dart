@@ -73,23 +73,24 @@ class PaymentPageState extends State<ConfirmPaymentPage> {
               },
               logo: 'assets/images/google_pay.png',
             ),
-            const SizedBox(height: 8),
-            PaymentMethodTile(
-              value: 'Cash on Delivery',
-              groupValue: selectedPaymentMethod,
-              onChanged: (value) {
-                setState(() {
-                  selectedPaymentMethod = value!;
-                });
-              },
-              logo: 'assets/images/cash.png',
-            ),
+            // const SizedBox(height: 8),
+            // PaymentMethodTile(
+            //   value: 'Cash on Delivery',
+            //   groupValue: selectedPaymentMethod,
+            //   onChanged: (value) {
+            //     setState(() {
+            //       selectedPaymentMethod = value!;
+            //     });
+            //   },
+            //   logo: 'assets/images/cash.png',
+            // ),
             const Spacer(),
             const Text('Items Purchased',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
-            const ItemRow(name: "500mg 30 capsules Amoxicillin", price: 100.25),
-            const ItemRow(name: "500mg 10 tablets Metformin", price: 65.25),
+            // const ItemRow(name: "500mg 30 capsules Amoxicillin", price: 100.25),
+            // const ItemRow(name: "500mg 10 tablets Metformin", price: 65.25),
+            const ItemRow(name: "Consultation Fee", price: 50.00),
             const SizedBox(height: 16),
             const Divider(),
             const SizedBox(height: 8),
@@ -97,14 +98,22 @@ class PaymentPageState extends State<ConfirmPaymentPage> {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             const PaymentSummary(
-              subTotal: 165.50,
-              shippingFee: 6.50,
-              totalPayment: 172.00,
+              subTotal: 50.00,
+              transactionFee: 2.50,
+              totalPayment: 52.50,
             ),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 // Implement API call to payment page here
+
+                // Navigate to the payment success page
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => Zhisyeh page(),
+                //   ),
+                // );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFA4A5FF),
@@ -195,13 +204,15 @@ class PaymentMethodTile extends StatelessWidget {
 
 class PaymentSummary extends StatelessWidget {
   final double subTotal;
-  final double shippingFee;
+  final double? shippingFee;
+  final double? transactionFee;
   final double totalPayment;
 
   const PaymentSummary(
       {Key? key,
       required this.subTotal,
-      required this.shippingFee,
+      this.shippingFee,
+      this.transactionFee,
       required this.totalPayment})
       : super(key: key);
 
@@ -211,7 +222,10 @@ class PaymentSummary extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SummaryRow(label: 'Sub-Total', value: subTotal),
-        SummaryRow(label: 'Shipping Fee', value: shippingFee),
+        if (transactionFee != null)
+          SummaryRow(label: 'Transaction Fee', value: transactionFee!),
+        if (shippingFee != null)
+          SummaryRow(label: 'Shipping Fee', value: shippingFee!),
         SummaryRow(label: 'Total Payment', value: totalPayment, isTotal: true),
       ],
     );

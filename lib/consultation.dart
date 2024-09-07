@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import "ai_chatbot.dart";
+import 'booking_consultation.dart';
+import 'message.dart';
 
 class Consultation extends StatefulWidget {
   const Consultation({Key? key}) : super(key: key);
@@ -32,6 +34,29 @@ class ConsultationState extends State<Consultation> {
       viewAllAppointments = !viewAllAppointments;
     });
   }
+
+  // void _joinVoiceCall() async {
+  //   try {
+  //     var options = JitsiMeetingOptions(room: "predefinedRoomName")
+  //       ..userDisplayName = "predefinedUserName"
+  //       ..audioOnly = true; // Enable audio-only mode
+
+  //     await JitsiMeet.joinMeeting(options);
+  //   } catch (error) {
+  //     print("Error: $error");
+  //   }
+  // }
+
+  // void _joinVideoCall() async {
+  //   try {
+  //     var options = JitsiMeetingOptions(room: "predefinedRoomName")
+  //       ..userDisplayName = "predefinedUserName";
+
+  //     await JitsiMeet.joinMeeting(options);
+  //   } catch (error) {
+  //     print("Error: $error");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -280,42 +305,91 @@ class ConsultationState extends State<Consultation> {
                   Text(
                     name,
                     style: const TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
                     specialty,
-                    style: const TextStyle(fontSize: 14, color: Colors.grey),
+                    style: const TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                   Text(
                     experience,
-                    style: const TextStyle(fontSize: 14, color: Colors.grey),
+                    style: const TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                   const SizedBox(height: 8),
-                  Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(Icons.star, color: Colors.yellow[700], size: 16),
-                      const SizedBox(width: 4),
-                      Text(rating),
+                      Row(
+                        children: [
+                          Icon(Icons.star, color: Colors.yellow[700], size: 16),
+                          const SizedBox(width: 4),
+                          Text(rating,
+                              style: const TextStyle(
+                                fontSize: 10,
+                              )),
+                        ],
+                      ),
                       const SizedBox(width: 8),
-                      Text(patientStories),
+                      Text(patientStories,
+                          style: const TextStyle(
+                            fontSize: 10,
+                          )),
                     ],
                   ),
                   const SizedBox(height: 8),
                   Text(
                     'Next Available: $nextAvailable',
-                    style: const TextStyle(fontSize: 14, color: Colors.grey),
+                    style: const TextStyle(fontSize: 12, color: Colors.green),
                   ),
                 ],
               ),
             ),
-            IconButton(
-              icon: Icon(
-                isFavorite ? Icons.favorite : Icons.favorite_border,
-                color: isFavorite ? Colors.red : Colors.grey,
-              ),
-              onPressed: onPressed,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                IconButton(
+                  icon: Icon(
+                    isFavorite ? Icons.favorite : Icons.favorite_border,
+                    color: isFavorite ? Colors.red : Colors.grey,
+                  ),
+                  onPressed: onPressed,
+                ),
+                const SizedBox(height: 45),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const BookingPage()), // Replace with your target page
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFA4A5FF),
+                          elevation: 0, // No elevation
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                20), // Optional: rounded corners
+                          ),
+                        ),
+                        child: const Text(
+                          'Book Now',
+                          style: TextStyle(
+                            color: Colors.white, // Text color
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -348,19 +422,19 @@ class ConsultationState extends State<Consultation> {
             child: Column(
               children: [
                 _buildAppointmentCard(
-                  imageUrl: "assets/images/doctorconsultation2.jpg",
-                  name: 'Dr. Lebron James',
-                  bookingID: '1234abc',
-                  date: '2nd Sep 2024 (Mon)',
-                  time: '11:00AM',
+                  imageUrl: "assets/images/doctor.png",
+                  name: 'Dr. Afna Khan',
+                  bookingID: '2132CaB',
+                  date: '29th Aug 2024 (Fri)',
+                  time: '5:00PM',
                   duration: '30mins',
                 ),
                 _buildAppointmentCard(
                   imageUrl: "assets/images/doctorconsultation3.jpg",
-                  name: 'Dr. Jane Smith',
-                  bookingID: '5678def',
-                  date: '11rd Sep 2024 (Wed)',
-                  time: '12:00PM',
+                  name: 'Dr. Lebron James',
+                  bookingID: '1234aBc',
+                  date: '2nd Sep 2024 (Mon)',
+                  time: '11:00AM',
                   duration: '30mins',
                 ),
               ],
@@ -487,6 +561,7 @@ class ConsultationState extends State<Consultation> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Doctor Details'),
+        scrolledUnderElevation: 0.0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -496,101 +571,163 @@ class ConsultationState extends State<Consultation> {
           },
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Doctor Image and Name
-            const Center(
-              child: Column(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Doctor Image and Name
+              const Center(
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 50,
+                      backgroundImage: AssetImage(
+                          'assets/images/doctorconsultation2.jpg'), // Replace with your image asset path
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Dr. Lebron James',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'Physician',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              // Stats Row
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundImage: AssetImage(
-                        'assets/images/doctorconsultation1.jpg'), // Replace with your image asset path
+                  _buildStatCard('82', 'Patients', Icons.people),
+                  _buildStatCard('8', 'Years\nExperience', Icons.timer),
+                  _buildStatCard('4.75', 'Ratings', Icons.bar_chart),
+                ],
+              ),
+              const SizedBox(height: 20),
+              // About Doctor
+              const Text(
+                'About Doctor',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                'Dr. Lebron James is a distinguished physician with over 8 years of experience, highly regarded for his expertise and patient-centered approach. Throughout his career, he has consistently demonstrated a commitment to providing top-quality medical care. Dr. James is known for his ability to connect with patients, understanding their unique needs and offering tailored treatment plans. His dedication to continuous learning ensures he stays updated with the latest advancements in medicine, enabling him to deliver the most effective care possible. Patients trust Dr. James for his professionalism, compassion, and unwavering commitment to their health.',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey[600],
+                ),
+              ),
+              const SizedBox(height: 20),
+              // Working Time
+              const Text(
+                'Working Time',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                'Mon - Sat 11:00 AM - 5:00 PM',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey[600],
+                ),
+              ),
+              const SizedBox(height: 20),
+              // Communication
+              const Text(
+                'Communication',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      // Handle Messaging button tap
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ChatPage()),
+                      );
+                    },
+                    child: _buildCommunicationCard('Messaging', Icons.message),
                   ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Dr. Lebron James',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  GestureDetector(
+                    onTap: () {
+                      // Handle Voice Call button tap
+                      // _joinVoiceCall();
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) => const CallScreen()),
+                      // );
+                    },
+                    child: _buildCommunicationCard('Voice Call', Icons.phone),
                   ),
-                  Text(
-                    'Physician',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
-                    ),
+                  GestureDetector(
+                    onTap: () {
+                      // Handle Video Call button tap
+                      // _joinVideoCall();
+                    },
+                    child:
+                        _buildCommunicationCard('Video Call', Icons.video_call),
                   ),
                 ],
               ),
-            ),
-            const SizedBox(height: 20),
-            // Stats Row
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildStatCard('82', 'Patients', Icons.people),
-                _buildStatCard('8', 'Experience', Icons.timer),
-                _buildStatCard('4.75', 'Ratings', Icons.bar_chart),
-              ],
-            ),
-            const SizedBox(height: 20),
-            // About Doctor
-            const Text(
-              'About Doctor',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Dr. Lebron James is a dedicated cardiologist with over 15 years of experience. Specializing in heart conditions like coronary artery disease and arrhythmia, he combines expert care with a compassionate approach to help his patients achieve better heart health.',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[600],
-              ),
-            ),
-            const SizedBox(height: 20),
-            // Working Time
-            const Text(
-              'Working Time',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Mon - Sat 11:00 AM - 5:00 PM',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[600],
-              ),
-            ),
-            const SizedBox(height: 20),
-            // Communication
-            const Text(
-              'Communication',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildCommunicationCard('Messaging', Icons.message),
-                _buildCommunicationCard('Voice Call', Icons.phone),
-                _buildCommunicationCard('Video Call', Icons.video_call),
-              ],
-            ),
-          ],
+              const SizedBox(height: 20),
+              // Book now button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const BookingPage()), // Replace with your target page
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFA4A5FF),
+                      elevation: 0, // No elevation
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            20), // Optional: rounded corners
+                      ),
+                    ),
+                    child: const Text(
+                      'Book Now',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white, // Text color
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -600,6 +737,7 @@ class ConsultationState extends State<Consultation> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Doctor Details'),
+        scrolledUnderElevation: 0.0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -609,101 +747,135 @@ class ConsultationState extends State<Consultation> {
           },
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Doctor Image and Name
-            const Center(
-              child: Column(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Doctor Image and Name
+              const Center(
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 50,
+                      backgroundImage: AssetImage(
+                          'assets/images/doctorconsultation3.jpg'), // Replace with your image asset path
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Dr. Jane Smith',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'Specialist medicine',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              // Stats Row
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundImage: AssetImage(
-                        'assets/images/doctorconsultation2.jpg'), // Replace with your image asset path
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Dr. Jane Smith',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    'Specialist medicine',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
-                    ),
-                  ),
+                  _buildStatCard('60', 'Patients', Icons.people),
+                  _buildStatCard('6', 'Years\nExperience', Icons.timer),
+                  _buildStatCard('4.35', 'Ratings', Icons.bar_chart),
                 ],
               ),
-            ),
-            const SizedBox(height: 20),
-            // Stats Row
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildStatCard('60', 'Patients', Icons.people),
-                _buildStatCard('6', 'Experience', Icons.timer),
-                _buildStatCard('4.35', 'Ratings', Icons.bar_chart),
-              ],
-            ),
-            const SizedBox(height: 20),
-            // About Doctor
-            const Text(
-              'About Doctor',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+              const SizedBox(height: 20),
+              // About Doctor
+              const Text(
+                'About Doctor',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Dr. Jane Smith is a dedicated cardiologist with over 15 years of experience. Specializing in heart conditions like coronary artery disease and arrhythmia, he combines expert care with a compassionate approach to help his patients achieve better heart health.',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[600],
+              const SizedBox(height: 10),
+              Text(
+                'Dr. Jane Smith is a dedicated cardiologist with over 15 years of experience. Specializing in heart conditions like coronary artery disease and arrhythmia, he combines expert care with a compassionate approach to help his patients achieve better heart health.',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey[600],
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            // Working Time
-            const Text(
-              'Working Time',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+              const SizedBox(height: 20),
+              // Working Time
+              const Text(
+                'Working Time',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Mon - Sat 11:00 AM - 5:00 PM',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[600],
+              const SizedBox(height: 10),
+              Text(
+                'Mon - Sat 11:00 AM - 5:00 PM',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey[600],
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            // Communication
-            const Text(
-              'Communication',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+              const SizedBox(height: 20),
+              // Communication
+              const Text(
+                'Communication',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildCommunicationCard('Messaging', Icons.message),
-                _buildCommunicationCard('Voice Call', Icons.phone),
-                _buildCommunicationCard('Video Call', Icons.video_call),
-              ],
-            ),
-          ],
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildCommunicationCard('Messaging', Icons.message),
+                  _buildCommunicationCard('Voice Call', Icons.phone),
+                  _buildCommunicationCard('Video Call', Icons.video_call),
+                ],
+              ),
+              const SizedBox(height: 20),
+              // Book now button
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const BookingPage()), // Replace with your target page
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFA4A5FF),
+                      elevation: 0, // No elevation
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            20), // Optional: rounded corners
+                      ),
+                    ),
+                    child: const Text(
+                      'Book Now',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white, // Text color
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -713,7 +885,7 @@ class ConsultationState extends State<Consultation> {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: Colors.blue[50],
+        color: const Color(0xFFE8F0FF),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -721,7 +893,7 @@ class ConsultationState extends State<Consultation> {
           Icon(
             icon,
             size: 40,
-            color: Colors.blue,
+            color: const Color(0xFFA4A5FF),
           ),
           const SizedBox(height: 10),
           Text(
@@ -738,6 +910,7 @@ class ConsultationState extends State<Consultation> {
               fontSize: 16,
               color: Colors.grey[600],
             ),
+            textAlign: TextAlign.center,
           ),
         ],
       ),
@@ -750,13 +923,13 @@ class ConsultationState extends State<Consultation> {
         Container(
           padding: const EdgeInsets.all(12.0),
           decoration: BoxDecoration(
-            color: Colors.blue[50],
+            color: const Color(0xFFE8F0FF),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Icon(
             icon,
             size: 30,
-            color: Colors.blue,
+            color: const Color(0xFFA4A5FF),
           ),
         ),
         const SizedBox(height: 5),

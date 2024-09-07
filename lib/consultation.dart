@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import "ai_chatbot.dart";
 import 'booking_consultation.dart';
-import 'message.dart';
+import 'message_detail.dart';
 
 class Consultation extends StatefulWidget {
   const Consultation({Key? key}) : super(key: key);

@@ -47,6 +47,7 @@ dependencies:
   google_generative_ai: ^0.4.5
   flutter_markdown: ^0.6.19
   flutter_dotenv: ^5.0.0
+  intl: ^0.17.0
   
 dependency_overrides:
   # Add the specific version of the conflicting dependency here

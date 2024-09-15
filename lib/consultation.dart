@@ -35,28 +35,44 @@ class ConsultationState extends State<Consultation> {
     });
   }
 
-  // void _joinVoiceCall() async {
-  //   try {
-  //     var options = JitsiMeetingOptions(room: "predefinedRoomName")
-  //       ..userDisplayName = "predefinedUserName"
-  //       ..audioOnly = true; // Enable audio-only mode
+  Future<void> _selectDateTime(BuildContext context) async {
+    DateTime? selectedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
 
-  //     await JitsiMeet.joinMeeting(options);
-  //   } catch (error) {
-  //     print("Error: $error");
-  //   }
-  // }
+    if (selectedDate == null) return;
 
-  // void _joinVideoCall() async {
-  //   try {
-  //     var options = JitsiMeetingOptions(room: "predefinedRoomName")
-  //       ..userDisplayName = "predefinedUserName";
+    if (!context.mounted) return;
 
-  //     await JitsiMeet.joinMeeting(options);
-  //   } catch (error) {
-  //     print("Error: $error");
-  //   }
-  // }
+    TimeOfDay? selectedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (selectedTime == null) return;
+
+    DateTime finalDateTime = DateTime(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day,
+      selectedTime.hour,
+      selectedTime.minute,
+    );
+
+    if (!context.mounted) return;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BookingPage(
+          selectedDateTime: finalDateTime,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -364,12 +380,7 @@ class ConsultationState extends State<Consultation> {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const BookingPage()), // Replace with your target page
-                          );
+                          _selectDateTime(context);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFA4A5FF),
@@ -701,12 +712,7 @@ class ConsultationState extends State<Consultation> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const BookingPage()), // Replace with your target page
-                      );
+                      _selectDateTime(context);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFA4A5FF),
@@ -849,12 +855,7 @@ class ConsultationState extends State<Consultation> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const BookingPage()), // Replace with your target page
-                      );
+                      _selectDateTime(context);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFA4A5FF),

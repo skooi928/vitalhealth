@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vital_health/confirm_popup.dart';
 
 class ConfirmPaymentPage extends StatefulWidget {
   const ConfirmPaymentPage({Key? key}) : super(key: key);
@@ -108,12 +109,12 @@ class PaymentPageState extends State<ConfirmPaymentPage> {
                 // Implement API call to payment page here
 
                 // Navigate to the payment success page
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => Zhisyeh page(),
-                //   ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ScheduledPopup(),
+                  ),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFA4A5FF),

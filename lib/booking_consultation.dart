@@ -1,16 +1,32 @@
 import 'package:flutter/material.dart';
-
 import 'confirm_payment.dart';
+import 'package:intl/intl.dart';
 
 class BookingPage extends StatefulWidget {
-  const BookingPage({Key? key}) : super(key: key);
+  final DateTime selectedDateTime;
+  const BookingPage({Key? key, required this.selectedDateTime})
+      : super(key: key);
+
   @override
   BookingPageState createState() => BookingPageState();
 }
 
 class BookingPageState extends State<BookingPage> {
+  late DateTime _selectedDateTime;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the state variable with the passed date and time
+    _selectedDateTime = widget.selectedDateTime;
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Format the date and time
+    String formattedDate =
+        DateFormat('d MMMM yyyy (EEEE)').format(_selectedDateTime);
+    String formattedTime = DateFormat('h:mm a').format(_selectedDateTime);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -78,7 +94,9 @@ class BookingPageState extends State<BookingPage> {
                         borderRadius: BorderRadius.circular(8),
                         color: Colors.grey[200],
                       ),
-                      child: const Text('30th August 2024 (Friday)'),
+                      child: Text(
+                        formattedDate,
+                      ),
                     ),
                     const SizedBox(width: 16),
                     Container(
@@ -88,7 +106,9 @@ class BookingPageState extends State<BookingPage> {
                         borderRadius: BorderRadius.circular(8),
                         color: Colors.grey[200],
                       ),
-                      child: const Text('11:00 AM'),
+                      child: Text(
+                        formattedTime,
+                      ),
                     ),
                   ],
                 ),
